@@ -5,13 +5,19 @@
   "start_url": "/tandandesa/",
   "scope": "/tandandesa/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#0b3d91",
   "theme_color": "#0b3d91",
   "orientation": "portrait",
   "lang": "id",
   "dir": "ltr",
-  "categories": ["government", "utilities"],
+  "categories": [
+    "government",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "192X192.png",
