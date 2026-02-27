@@ -1,0 +1,5443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANDAN DESA</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b3d91">
+
+<style>
+ 
+
+
+
+/* ================= NAVBAR DESKTOP ================= */
+nav{
+    background:#0b3d91;
+    padding:15px;
+}
+
+nav ul{
+    list-style:none;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr); /* 3 kolom sejajar */
+    gap:12px;
+    max-width:1200px;
+    margin:auto;
+}
+
+nav li{
+    position:relative;
+}
+
+nav > ul > li > a{
+    display:block;
+    background:#1a73e8;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    text-align:center;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+nav > ul > li > a:hover{
+    background:#155cb0;
+}
+
+/* ================= DROPDOWN ================= */
+nav li ul{
+    display:none;
+    position:absolute;
+    top:110%;
+    left:0;
+    width:100%;
+    background:#0b3d91;
+    border-radius:8px;
+    padding:5px;
+    z-index:999;
+}
+
+nav li ul li{
+    margin:5px 0;
+}
+
+nav li ul a{
+    display:block;
+    background:#1a73e8;
+    padding:8px;
+    border-radius:6px;
+    font-size:14px;
+    color:white; 
+    text-decoration:none;
+}
+
+nav li ul a:hover{
+    background:#155cb0;
+}
+
+nav li.show > ul{
+    display:block;
+}
+
+/* ================= RESPONSIVE HP ================= */
+@media (max-width:768px){
+    nav ul{
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+    }
+
+    nav li ul{
+        position:static;
+        width:100%;
+        margin-top:5px;
+    }
+}
+.content{
+    max-width:1200px;
+    margin:30px auto;
+    padding:40px;
+    border-radius:12px;
+
+    background:transparent;   /* hilangkan kotak putih */
+    box-shadow:none;          /* hilangkan bayangan */
+}
+
+
+/* Supaya teks di atas watermark */
+.content > *{
+    position:relative;
+    z-index:1;
+}
+.header-resmi{
+    text-align:center;
+    padding-bottom:20px;
+    margin-bottom:30px;
+    border-bottom:none
+}
+
+.header-resmi h1{
+    font-size:36px;
+    color:#0d47a1;
+    margin-bottom:10px;
+    letter-spacing:2px;
+}
+
+.header-resmi .sub1{
+    font-size:18px;
+    color:#444;
+    margin:5px 0;
+}
+
+.header-resmi .sub2{
+    font-size:15px;
+    color:#777;
+}
+form{margin-top:15px;display:flex;flex-direction:column;gap:15px;}
+.form-item{display:flex;flex-direction:column;}
+.form-item label{font-weight:600;margin-bottom:5px;}
+input,select,button{padding:8px;border:1px solid #ccc;border-radius:5px;text-align:center;font-weight:500;transition:0.2s;height:36px;}
+input:focus,select:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 5px rgba(26,115,232,0.3);}
+.input-lpt{display:flex;flex-direction:column;gap:5px;}
+button{padding:10px 15px;border:none;background:#1a73e8;color:white;border-radius:5px;cursor:pointer;font-weight:600;transition:0.3s;}
+button:hover{background:#155cb0;}
+.table-wrapper{
+    overflow-x:auto;
+    margin-top:20px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+th,td{border:1px solid #ccc;padding:5px 8px;text-align:center;font-size:0.9em;background:white;}
+thead tr:first-child th{background:#1a73e8;color:white;position:sticky;top:0;z-index:3;}
+thead tr:nth-child(2) th{background:#4a90e2;color:white;position:sticky;top:30px;z-index:2;}
+tbody tr:hover{background:#f1f5fb;}
+.edit-btn{background:orange;color:white;border:none;padding:4px 7px;border-radius:3px;cursor:pointer;}
+.delete-btn{background:red;color:white;border:none;padding:4px 7px;border-radius:3px;cursor:pointer;}
+.filter-div{margin-top:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.filter-div label{font-weight:600;}
+canvas{max-width:100%;}
+/* ================= RESPONSIVE HP ================= */
+@media (max-width: 768px) {
+
+    /* ===== NAVBAR JADI VERTIKAL ===== */
+    nav ul {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav li {
+        width: 100%;
+    }
+
+    nav a {
+        width: 100%;
+    }
+
+    nav li ul {
+        position: static;
+        width: 100%;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    /* ===== FORM ===== */
+    input, select, button {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .filter-div {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* ===== TABLE ===== */
+    table {
+        font-size: 12px;
+        min-width: 700px; /* supaya masih bisa digeser */
+    }
+
+    th, td {
+        padding: 4px;
+    }
+
+    /* Tombol aksi lebih kecil */
+    .edit-btn, .delete-btn {
+        padding: 3px 5px;
+        font-size: 12px;
+    }
+
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- TAMBAHKAN INI -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav><ul id="navbar"></ul></nav>
+
+<div class="content" id="main-content">
+
+  <img src="logo.png" 
+     style="width:100%;
+            max-width:650px;
+            display:block;
+            margin:50px auto;">
+
+</div>
+
+<script>
+// ===== DATA & KONSTANTA =====
+const desaList=['BOTOLINGGO','GAYAM','GAYAM LOR','KLEKEAN','PENANG','LANAS','LUMUTAN','SUMBER CANTING'];
+
+// ===== LOGIN SYSTEM =====
+const adminAccounts = {
+    'KECAMATAN':'111',
+    'BOTOLINGGO':'1231',
+    'GAYAM':'1232',
+    'GAYAM LOR':'1233',
+    'KLEKEAN':'1234',
+    'PENANG':'1235',
+    'LANAS':'1236',
+    'LUMUTAN':'1237',
+    'SUMBER CANTING':'1238'
+    
+};
+
+let currentUser = {
+    role: 'kecamatan',   // default kecamatan
+    desa: null
+};
+
+const bulanList=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const tahunList=[2026,2027,2028,2029,2030];
+const fields=[
+    { key:'penduduk_awal', label:'Penduduk Awal Bulan Ini' },
+    { key:'lahir', label:'Lahir Bulan Ini' },
+    { key:'meninggal', label:'Mati Bulan Ini' },
+    { key:'pendatang', label:'Pendatang Bulan Ini' },
+    { key:'pindah', label:'Pindah Bulan Ini' }
+];
+window.data = {
+    kependudukan:{},
+    produkcapil:{},
+    kesehatan:{},
+    kondisi:{},
+    keagamaan:{},
+    infrastruktur:{},
+    bantuan:{},
+    pendidikan:{},
+    umkm:{},
+    pertanian:{},
+    peternakan:{},
+    perkebunan:{},
+    notifikasi:[]
+};
+
+// ⬇️ BARU DI BAWAHNYA
+desaList.forEach(d=>{
+    if(!window.data.kependudukan[d]) window.data.kependudukan[d] = [];
+    if(!window.data.produkcapil[d]) window.data.produkcapil[d] = [];
+    if(!window.data.kesehatan[d]) window.data.kesehatan[d] = [];
+    if(!window.data.kondisi[d]) window.data.kondisi[d] = [];
+    if(!window.data.keagamaan[d]) window.data.keagamaan[d] = [];
+    if(!window.data.infrastruktur[d]) window.data.infrastruktur[d] = [];
+    if(!window.data.bantuan[d]) window.data.bantuan[d] = [];
+    if(!window.data.pendidikan[d]) window.data.pendidikan[d] = [];
+    if(!window.data.umkm[d]) window.data.umkm[d] = [];
+    if(!window.data.pertanian[d]) window.data.pertanian[d] = [];
+    if(!window.data.peternakan[d]) window.data.peternakan[d] = [];
+    if(!window.data.perkebunan[d]) window.data.perkebunan[d] = [];
+});
+// ===== SISTEM NOTIFIKASI =====
+if(!data.notifikasi) data.notifikasi = [];
+
+function tambahNotifikasi(desa, jenisForm){
+
+    const now = new Date();
+
+    data.notifikasi.unshift({
+        desa: desa,
+        form: jenisForm,
+        tanggal: now.toLocaleDateString('id-ID'),
+        jam: now.toLocaleTimeString('id-ID'),
+        timestamp: now.getTime(),
+        dibaca: false   // 🔥 TAMBAHAN
+    });
+
+    save();
+    updateBadge();
+}
+function tampilNotifikasi(){
+
+    // 🔒 KUNCI AKSES
+    if(currentUser.role !== "kecamatan"){
+        alert("Menu Notifikasi hanya bisa diakses Admin Kecamatan!");
+        return;
+    }
+
+    // ✅ TAMBAHKAN DI SINI
+    data.notifikasi.forEach(n=>{
+        n.dibaca = true;
+    });
+
+    save();
+    updateBadge();}
+
+// ===== NAVBAR =====
+const navbar = document.getElementById("navbar");
+navbar.innerHTML = `<li>
+    <a href="#">KECAMATAN</a>
+    <ul>
+         <li>
+    <a href="#" id="menuNotifikasi">
+        🔔 NOTIFIKASI 
+        <span id="badgeNotif" style="
+            background:red;
+            color:white;
+            padding:2px 6px;
+            border-radius:12px;
+            font-size:12px;
+            margin-left:5px;
+            display:none;
+        ">0</span>
+    </a>
+</li>
+        <li><a href="#" id="menuKecamatan">DATA KEPENDUDUKAN</a></li>
+        <li><a href="#" id="menuKecamatanCapil">DATA PRODUKCAPIL</a></li>
+        <li><a href="#" id="menuKecamatanKesehatan">DATA AKSES KESEHATAN</a></li>
+        <li><a href="#" id="menuKecamatanKondisi">DATA KONDISI KHUSUS</a></li>
+        <li><a href="#" id="menuKecamatanKeagamaan">DATA KEAGAMAAN</a></li>
+        <li><a href="#" id="menuKecamatanInfra">DATA INFRA JALAN</a></li>
+        <li><a href="#" id="menuKecamatanBantuan">DATA PENERIMA BANTUAN</a></li>
+        <li><a href="#" id="menuKecamatanPendidikan">DATA PENDIDIKAN</a></li>
+        <li><a href="#" id="menuKecamatanUMKM">DATA UMKM</a></li>
+        <li><a href="#" id="menuKecamatanPertanian">DATA PERTANIAN</a></li>
+        <li><a href="#" id="menuKecamatanPeternakan">DATA PETERNAKAN & PERIKANAN</a></li>
+        <li><a href="#" id="menuKecamatanPerkebunan">DATA PERKEBUNAN & KEHUTANAN</a></li>
+        <li><a href="#" id="menuStatistik">STATISTIK DESA</a></li>
+    </ul>
+</li>` +
+desaList.map(d => `<li>
+    <a href="#">${d}</a>
+    <ul>
+        <li><a href="#" class="submenu-desa" data-desa="${d}">KEPENDUDUKAN</a></li>
+        <li><a href="#" class="submenu-produkcapil" data-desa="${d}">PRODUKCAPIL</a></li>
+         <li><a href="#" class="submenu-kesehatan" data-desa="${d}">AKSES KESEHATAN</a></li>
+         <li><a href="#" class="submenu-kondisi" data-desa="${d}">KONDISI KHUSUS</a></li>
+         <li><a href="#" class="submenu-keagamaan" data-desa="${d}">KEAGAMAAN</a></li>
+         <li><a href="#" class="submenu-infrastruktur" data-desa="${d}">INFRASTRUKTUR JALAN</a></li>
+         <li><a href="#" class="submenu-bantuan" data-desa="${d}">PENERIMA BANTUAN</a></li>
+         <li><a href="#" class="submenu-pendidikan" data-desa="${d}">PENDIDIKAN</a></li>
+         <li><a href="#" class="submenu-umkm" data-desa="${d}">UMKM</a></li>
+         <li><a href="#" class="submenu-pertanian" data-desa="${d}">PERTANIAN</a></li>
+         <li><a href="#" class="submenu-peternakan" data-desa="${d}">PETERNAKAN & PERIKANAN</a></li>
+         <li><a href="#" class="submenu-perkebunan" data-desa="${d}">PERKEBUNAN & KEHUTANAN</a></li>
+    </ul>
+</li>`).join("");
+
+// Toggle dropdown
+// ===== SISTEM HAK AKSES NAVBAR =====
+document.querySelectorAll("nav > ul > li > a").forEach(a=>{
+    const sub = a.nextElementSibling;
+    if(!sub) return;
+
+    a.onclick = e=>{
+        e.preventDefault();
+
+        const menuName = a.textContent.trim().split("\n")[0].trim();
+
+        // ===== MENU KECAMATAN SELALU BOLEH =====
+        if(menuName === "KECAMATAN"){
+            a.parentElement.classList.toggle("show");
+            return;
+        }
+
+        // ===== MENU DESA PERLU LOGIN =====
+        const input = prompt("Masukkan password untuk " + menuName);
+
+if(input !== adminAccounts[menuName]){
+    alert("Password salah!");
+    return;
+}
+        a.parentElement.classList.toggle("show");
+    };
+});
+function closeDropdowns(){
+    document.querySelectorAll('nav li.show')
+        .forEach(li=>li.classList.remove('show'));
+}
+
+document.addEventListener("click", function(e){
+    if(!e.target.closest("nav")){
+        closeDropdowns();
+    }
+});
+// Submenu KEPENDUDUKAN
+document.querySelectorAll('.submenu-desa').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        formDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+// Submenu PRODUKCAPIL
+document.querySelectorAll('.submenu-produkcapil').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        produkCapil(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+document.getElementById('menuKecamatanKondisi').onclick = e=>{
+    e.preventDefault();
+    kondisiKhususKecamatan();   // ✅ sesuai nama function
+    closeDropdowns();
+}
+
+  document.getElementById("menuNotifikasi").onclick = e=>{
+    e.preventDefault();
+
+    if(currentUser.role !== "kecamatan"){
+        alert("Menu Notifikasi hanya untuk Admin Kecamatan!");
+        return;
+    }
+
+    closeDropdowns();   // 🔥 TAMBAHKAN INI
+    tampilNotifikasi();
+};
+
+   
+// Submenu KEAGAMAAN
+document.querySelectorAll('.submenu-keagamaan').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        keagamaanDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+// Submenu INFRASTRUKTUR
+document.querySelectorAll('.submenu-infrastruktur').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        infrastrukturDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+ // Submenu PENERIMA BANTUAN
+document.querySelectorAll('.submenu-bantuan').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        penerimaBantuan(link.dataset.desa); // ✅ BENAR
+        closeDropdowns();
+    }
+});
+
+// Submenu UMKM
+document.querySelectorAll('.submenu-umkm').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        umkmDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+document.getElementById("menuKecamatanUMKM").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanUMKM();
+    closeDropdowns();
+};
+
+// Submenu PERTANIAN
+document.querySelectorAll('.submenu-pertanian').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        pertanianDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+// Submenu PETERNAKAN
+document.querySelectorAll('.submenu-peternakan').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        peternakanDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+document.getElementById("menuKecamatanPeternakan").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanPeternakan();
+    closeDropdowns();
+};
+// Submenu PERKEBUNAN
+document.querySelectorAll('.submenu-perkebunan').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        perkebunanDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+document.getElementById("menuKecamatanPerkebunan").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanPerkebunan();
+    closeDropdowns();
+};
+
+
+// Menu kecamatan
+
+document.getElementById('menuKecamatan').onclick = e=>{
+    e.preventDefault();
+    closeDropdowns();   // 🔥 Pindah ke atas
+    dataKecamatan();
+}
+document.getElementById('menuKecamatanCapil').onclick = e=>{
+    e.preventDefault();
+    dataKecamatanCapil();   // 🔥 panggil function yang sudah ada
+    closeDropdowns();
+}
+ document.getElementById('menuKecamatanKesehatan').onclick = e=>{
+    e.preventDefault();
+    dataKecamatanKesehatan();
+    closeDropdowns();
+}
+document.getElementById("menuKecamatanKeagamaan").onclick = e=>{
+    e.preventDefault();
+    dataKeagamaanKecamatan();
+    closeDropdowns();
+};
+document.getElementById("menuKecamatanInfra").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanInfra();
+    closeDropdowns();
+}
+document.getElementById("menuKecamatanBantuan").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanBantuan();
+    closeDropdowns();
+}
+document.getElementById("menuKecamatanPendidikan").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanPendidikan();
+    closeDropdowns();
+};
+
+document.getElementById("menuStatistik").onclick = e=>{
+    e.preventDefault();
+    closeDropdowns();   // ini yang benar
+    tampilStatistikDesa();
+};
+
+
+   
+
+// Submenu PENDIDIKAN
+document.querySelectorAll('.submenu-pendidikan').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        pendidikanDesa(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+document.getElementById("menuKecamatanPertanian").onclick = e=>{
+    e.preventDefault();
+    dataKecamatanPertanian();
+    closeDropdowns();
+};
+// ===== FORM DESA =====
+function formDesa(desa){
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+    const c=document.getElementById("main-content");
+    c.innerHTML = `<h3>DATA KEPENDUDUKAN DESA ${desa}</h3>
+    <form id="formDesaForm">
+    <div class="form-item"><label>Bulan</label><select name="bulan">${bulanList.map(b=>`<option>${b}</option>`).join('')}</select></div>
+    <div class="form-item"><label>Tahun</label><select name="tahun">${tahunList.map(t=>`<option>${t}</option>`).join('')}</select></div>
+    ${fields.map(f=>`<div class="form-item"><label>${f.label}</label>
+    <div class="input-lpt">
+    <input type="number" name="${f.key}_l" placeholder="L">
+    <input type="number" name="${f.key}_p" placeholder="P">
+    <input type="number" name="${f.key}_t" placeholder="L+P" readonly>
+    </div></div>`).join('')}
+    <button type="submit">Simpan</button>
+    </form>
+
+    <div class="filter-div">
+    <label>Bulan:</label><select class="filterBulan"><option value="">-- Semua Bulan --</option>${bulanList.map(b=>`<option>${b}</option>`).join('')}</select>
+    <label>Tahun:</label><select class="filterTahun"><option value="">-- Semua Tahun --</option>${tahunList.map(t=>`<option>${t}</option>`).join('')}</select>
+    <button class="btnFilter">Filter</button>
+    <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableDesa">
+      <thead>
+        <tr>
+          <th rowspan="2">No</th>
+          <th rowspan="2">Bulan</th>
+          <th rowspan="2">Tahun</th>
+          ${fields.map(f=>`<th colspan="3">${f.label}</th>`).join('')}
+          <th colspan="3">Penduduk Akhir Bulan Ini</th>
+          <th rowspan="2">Aksi</th>
+        </tr>
+        <tr>
+          ${fields.map(f=>'<th>L</th><th>P</th><th>L+P</th>').join('')}
+          <th>L</th><th>P</th><th>L+P</th>
+        </tr>
+      </thead>
+      <tbody id="tbDesa"></tbody>
+    </table>
+    </div>`;
+
+    const form = document.getElementById("formDesaForm");
+    const tb = document.getElementById("tbDesa");
+    // ================= AUTO ISI PENDUDUK AWAL =================
+function isiPendudukAwal(){
+
+    const bulan = form.bulan.value;
+    const tahun = parseInt(form.tahun.value);
+
+    const indexBulan = bulanList.indexOf(bulan);
+
+    let prevBulan, prevTahun;
+
+    if(indexBulan === 0){
+        prevBulan = bulanList[11];
+        prevTahun = tahun - 1;
+    } else {
+        prevBulan = bulanList[indexBulan - 1];
+        prevTahun = tahun;
+    }
+
+    const dataSebelumnya = data.kependudukan[desa]
+        .find(r => r.bulan === prevBulan && r.tahun == prevTahun);
+
+    if(dataSebelumnya){
+
+        let akhirL = 
+            (dataSebelumnya.penduduk_awal?.l||0)
+            + (dataSebelumnya.lahir?.l||0)
+            + (dataSebelumnya.pendatang?.l||0)
+            - ((dataSebelumnya.meninggal?.l||0)
+            + (dataSebelumnya.pindah?.l||0));
+
+        let akhirP =
+            (dataSebelumnya.penduduk_awal?.p||0)
+            + (dataSebelumnya.lahir?.p||0)
+            + (dataSebelumnya.pendatang?.p||0)
+            - ((dataSebelumnya.meninggal?.p||0)
+            + (dataSebelumnya.pindah?.p||0));
+
+        form.penduduk_awal_l.value = akhirL;
+        form.penduduk_awal_p.value = akhirP;
+        form.penduduk_awal_t.value = akhirL + akhirP;
+
+    } else {
+        form.penduduk_awal_l.value = "";
+        form.penduduk_awal_p.value = "";
+        form.penduduk_awal_t.value = "";
+    }
+}
+
+// Jalankan saat bulan/tahun berubah
+form.bulan.onchange = isiPendudukAwal;
+form.tahun.onchange = isiPendudukAwal;
+
+    // HITUNG L+P
+    fields.forEach(f=>{
+        const l=form.querySelector(`[name="${f.key}_l"]`);
+        const p=form.querySelector(`[name="${f.key}_p"]`);
+        const t=form.querySelector(`[name="${f.key}_t"]`);
+        const hitung=()=> t.value=(+l.value||0)+(+p.value||0);
+        l.oninput=hitung; p.oninput=hitung;
+    });
+
+    // SIMPAN & RENDER TABEL
+    form.onsubmit = e=>{
+        e.preventDefault();
+        const fd = new FormData(form);
+        let valid = true;
+        fields.forEach(f=>{ if(fd.get(f.key+'_l')===''||fd.get(f.key+'_p')==='') valid=false; });
+        if(!valid){ alert('Semua kolom harus diisi!'); return; }
+        const obj={bulan:fd.get("bulan"),tahun:fd.get("tahun")};
+        fields.forEach(f=>{ obj[f.key]={l:+fd.get(f.key+"_l"),p:+fd.get(f.key+"_p"),t:+fd.get(f.key+"_t")}; });
+        data.kependudukan[desa].push(obj);
+
+        tambahNotifikasi(desa, "KEPENDUDUKAN");
+        
+        save(); render(); form.reset();
+    }
+
+    function render(){
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+        tb.innerHTML = "";
+        data.kependudukan[desa].filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT)).forEach((r,i)=>{
+            let akhir={l:0,p:0,t:0};
+            akhir.l = (r.penduduk_awal?.l||0) + (r.lahir?.l||0) + (r.pendatang?.l||0) - ((r.meninggal?.l||0)+(r.pindah?.l||0));
+            akhir.p = (r.penduduk_awal?.p||0) + (r.lahir?.p||0) + (r.pendatang?.p||0) - ((r.meninggal?.p||0)+(r.pindah?.p||0));
+            akhir.t = akhir.l + akhir.p;
+            tb.innerHTML+=`<tr>
+            <td>${i+1}</td>
+            <td>${r.bulan}</td>
+            <td>${r.tahun}</td>
+            ${fields.map(f=>`<td>${r[f.key]?.l||0}</td><td>${r[f.key]?.p||0}</td><td>${r[f.key]?.t||0}</td>`).join('')}
+            <td>${akhir.l}</td><td>${akhir.p}</td><td>${akhir.t}</td>
+            <td><button class="edit-btn" data-index="${i}">Edit</button>
+            <button class="delete-btn" data-index="${i}">Hapus</button></td></tr>`;
+        });
+        document.querySelectorAll('.edit-btn').forEach(btn=>{ btn.onclick=()=>{ if(!confirm('Yakin edit?')) return; editRow(+btn.dataset.index); }; });
+        document.querySelectorAll('.delete-btn').forEach(btn=>{ btn.onclick=()=>{ if(!confirm('Yakin hapus?')) return; deleteRow(+btn.dataset.index); }; });
+    }
+    window.editRow=i=>{
+        const r = data.kependudukan[desa][i];
+        form.bulan.value = r.bulan; form.tahun.value = r.tahun;
+        fields.forEach(f=>{ form[f.key+'_l'].value=r[f.key].l; form[f.key+'_p'].value=r[f.key].p; form[f.key+'_t'].value=r[f.key].t; });
+        data.kependudukan[desa].splice(i,1); save(); render();
+    }
+    window.deleteRow=i=>{ data.kependudukan[desa].splice(i,1); save(); render(); }
+    render();
+    document.querySelector('.btnFilter').onclick=render;
+
+    document.querySelector('.btnPDF').onclick = ()=>{
+        exportTablePDF(`DATA KEPENDUDUKAN DESA ${desa}`, 'tableDesa', `Kependudukan_${desa}.pdf`);
+    }
+}
+
+// ===== FORM PRODUKCAPIL DESA =====
+function produkCapil(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.produkcapil) data.produkcapil = {};
+    if(!data.produkcapil[desa]) data.produkcapil[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PRODUKCAPIL DESA ${desa}</h3>
+
+    <form id="formCapil">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'wajib_ktp',label:'Wajib Ber-KTP'},
+            {key:'usia_kurang_17_punya_ktp',label:'Usia <17 Punya KTP'},
+            {key:'usia_kurang_17_tidak_ktp',label:'Usia <17 Tidak Punya KTP'},
+            {key:'keluarga_wajib_kk',label:'Keluarga Wajib KK'},
+            {key:'keluarga_punya_kk',label:'Keluarga Punya KK'},
+            {key:'keluarga_tidak_kk',label:'Keluarga Tidak Punya KK'},
+            {key:'anak_punya_kia',label:'Anak Punya KIA'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Wajib KTP</th>
+                <th>Usia <17 Punya KTP</th>
+                <th>Usia <17 Tidak KTP</th>
+                <th>Keluarga Wajib KK</th>
+                <th>Keluarga Punya KK</th>
+                <th>Keluarga Tidak KK</th>
+                <th>Anak Punya KIA</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbCapil"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{
+            background:#007bff;color:white;border:none;padding:6px 12px;cursor:pointer;
+        }
+        #btnUbah{
+            background:#fd7e14;color:white;border:none;padding:6px 12px;cursor:pointer;
+        }
+        #btnSimpan{
+            background:#6f42c1;color:white;border:none;padding:6px 12px;cursor:pointer;
+        }
+        .btn-edit{
+            background:#28a745;color:white;border:none;padding:4px 8px;cursor:pointer;
+        }
+        .btn-hapus{
+            background:#dc3545;color:white;border:none;padding:4px 8px;cursor:pointer;
+        }
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formCapil");
+    const tb   = document.getElementById("tbCapil");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.produkcapil[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.produkcapil[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        // Jika bulan sudah ada → tampilkan & bisa edit
+        if(index !== -1){
+            const r = data.produkcapil[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true); // terkunci
+        }else{
+            setDisabled(false); // bulan pertama
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+
+        data.produkcapil[desa].push(obj);
+         tambahNotifikasi(desa, "PRODUKCAPIL");  
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+
+        const obj = {
+            bulan: fd.get("bulan"),
+            tahun: fd.get("tahun"),
+            wajib_ktp:+fd.get("wajib_ktp"),
+            usia_kurang_17_punya_ktp:+fd.get("usia_kurang_17_punya_ktp"),
+            usia_kurang_17_tidak_ktp:+fd.get("usia_kurang_17_tidak_ktp"),
+            keluarga_wajib_kk:+fd.get("keluarga_wajib_kk"),
+            keluarga_punya_kk:+fd.get("keluarga_punya_kk"),
+            keluarga_tidak_kk:+fd.get("keluarga_tidak_kk"),
+            anak_punya_kia:+fd.get("anak_punya_kia")
+        };
+
+        if(editIndex !== null){
+            data.produkcapil[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.produkcapil[desa].push(obj);
+        }
+             tambahNotifikasi(desa, "PRODUKCAPIL");  
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.produkcapil[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.wajib_ktp}</td>
+                <td>${r.usia_kurang_17_punya_ktp}</td>
+                <td>${r.usia_kurang_17_tidak_ktp}</td>
+                <td>${r.keluarga_wajib_kk}</td>
+                <td>${r.keluarga_punya_kk}</td>
+                <td>${r.keluarga_tidak_kk}</td>
+                <td>${r.anak_punya_kia}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.produkcapil[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.produkcapil[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// Submenu AKSES KESEHATAN
+document.querySelectorAll('.submenu-kesehatan').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        aksesKesehatan(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+// ===== AKSES KESEHATAN =====
+function aksesKesehatan(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.kesehatan) data.kesehatan = {};
+    if(!data.kesehatan[desa]) data.kesehatan[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA AKSES KESEHATAN DESA ${desa}</h3>
+
+    <form id="formKesehatan">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'bpjs',label:'BPJS'},
+            {key:'askes',label:'ASKES'},
+            {key:'kis',label:'KIS'},
+            {key:'pbi_jk',label:'PBI JK'},
+            {key:'jampersal',label:'JAMPERSAL'},
+            {key:'akses_lainnya',label:'Akses Lainnya'},
+            {key:'tidak_punya',label:'Tidak Punya Akses'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>BPJS</th>
+                <th>ASKES</th>
+                <th>KIS</th>
+                <th>PBI JK</th>
+                <th>JAMPERSAL</th>
+                <th>Akses Lainnya</th>
+                <th>Tidak Punya Akses</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbKesehatan"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formKesehatan");
+    const tb   = document.getElementById("tbKesehatan");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.kesehatan[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.kesehatan[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.kesehatan[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+
+        data.kesehatan[desa].push(obj);
+        tambahNotifikasi(desa, "AKSES KESEHATAN");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+
+        const obj = {
+            bulan: fd.get("bulan"),
+            tahun: fd.get("tahun"),
+            bpjs:+fd.get("bpjs"),
+            askes:+fd.get("askes"),
+            kis:+fd.get("kis"),
+            pbi_jk:+fd.get("pbi_jk"),
+            jampersal:+fd.get("jampersal"),
+            akses_lainnya:+fd.get("akses_lainnya"),
+            tidak_punya:+fd.get("tidak_punya")
+        };
+
+        if(editIndex !== null){
+            data.kesehatan[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.kesehatan[desa].push(obj);
+        }
+         tambahNotifikasi(desa, "AKSES KESEHATAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.kesehatan[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.bpjs}</td>
+                <td>${r.askes}</td>
+                <td>${r.kis}</td>
+                <td>${r.pbi_jk||0}</td>
+                <td>${r.jampersal}</td>
+                <td>${r.akses_lainnya}</td>
+                <td>${r.tidak_punya}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.kesehatan[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.kesehatan[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// Submenu KONDISI KHUSUS
+document.querySelectorAll('.submenu-kondisi').forEach(link=>{
+    link.onclick = e=>{
+        e.preventDefault();
+        kondisiKhusus(link.dataset.desa);
+        closeDropdowns();
+    }
+});
+
+// ===== KONDISI KHUSUS =====
+function kondisiKhusus(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.kondisi) data.kondisi = {};
+    if(!data.kondisi[desa]) data.kondisi[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA KONDISI KHUSUS DESA ${desa}</h3>
+
+    <form id="formKondisi">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'janda_70',label:'Janda Usia > 70 Th'},
+            {key:'anak_yatim',label:'Anak Yatim'},
+            {key:'stunting',label:'Stunting'},
+            {key:'difabel',label:'Difabel'},
+            {key:'rtm',label:'RTM Total'},
+            {key:'rtm_desil1',label:'RTM Desil 1'},
+            {key:'rtm_desil2',label:'RTM Desil 2'},
+            {key:'rtm_desil3',label:'RTM Desil 3'},
+            {key:'rtm_desil4',label:'RTM Desil 4'},
+            {key:'rtm_desil5',label:'RTM Desil 5'},
+            {key:'rtm_desil6',label:'RTM Desil 6'},
+            {key:'rtm_desil7',label:'RTM Desil 7'},
+            {key:'rtm_desil8',label:'RTM Desil 8'},
+            {key:'rtlh',label:'RTLH'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" min="0" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Janda</th>
+                <th>Yatim</th>
+                <th>Stunting</th>
+                <th>Difabel</th>
+                <th>RTM</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>D6</th>
+                <th>D7</th>
+                <th>D8</th>
+                <th>RTLH</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbKondisi"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formKondisi");
+    const tb   = document.getElementById("tbKondisi");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.kondisi[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.kondisi[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.kondisi[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+
+        data.kondisi[desa].push(obj);
+         tambahNotifikasi(desa, "KONDISI KHUSUS");
+
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+        const obj = {};
+
+        fd.forEach((v,k)=> obj[k] = isNaN(v) ? v : +v);
+
+        if(editIndex !== null){
+            data.kondisi[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.kondisi[desa].push(obj);
+        }
+        tambahNotifikasi(desa, "KONDISI KHUSUS");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.kondisi[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.janda_70}</td>
+                <td>${r.anak_yatim}</td>
+                <td>${r.stunting}</td>
+                <td>${r.difabel}</td>
+                <td>${r.rtm}</td>
+                <td>${r.rtm_desil1}</td>
+                <td>${r.rtm_desil2}</td>
+                <td>${r.rtm_desil3}</td>
+                <td>${r.rtm_desil4}</td>
+                <td>${r.rtm_desil5}</td>
+                <td>${r.rtm_desil6}</td>
+                <td>${r.rtm_desil7}</td>
+                <td>${r.rtm_desil8}</td>
+                <td>${r.rtlh}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.kondisi[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.kondisi[desa].splice(index,1);
+        
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== KEAGAMAAN DESA =====
+function keagamaanDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.keagamaan) data.keagamaan = {};
+    if(!data.keagamaan[desa]) data.keagamaan[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA KEAGAMAAN DESA ${desa}</h3>
+
+    <form id="formKeagamaan">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        <label>Jumlah Masjid</label>
+        <input type="number" name="jumlah_masjid" required>
+
+        <label>Masjid Butuh Bantuan</label>
+        <input type="number" name="masjid_butuh_bantuan" required>
+
+        <label>Jumlah Musholla</label>
+        <input type="number" name="jumlah_musholla" required>
+
+        <label>Musholla Butuh Bantuan</label>
+        <input type="number" name="musholla_butuh_bantuan" required>
+
+        <label>Guru Ngaji</label>
+        <input type="number" name="guru_ngaji" required>
+
+        <label>Jumlah Pesantren</label>
+        <input type="number" name="pesantren" required>
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Masjid</th>
+                <th>Butuh Bantuan</th>
+                <th>Musholla</th>
+                <th>Butuh Bantuan</th>
+                <th>Guru Ngaji</th>
+                <th>Pesantren</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbKeagamaan"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formKeagamaan");
+    const tb   = document.getElementById("tbKeagamaan");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.keagamaan[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.keagamaan[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.keagamaan[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+
+        data.keagamaan[desa].push(obj);
+         tambahNotifikasi(desa, "KEAGAMAAN");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+
+        const obj = {
+            bulan: fd.get("bulan"),
+            tahun: fd.get("tahun"),
+            jumlah_masjid:+fd.get("jumlah_masjid"),
+            masjid_butuh_bantuan:+fd.get("masjid_butuh_bantuan"),
+            jumlah_musholla:+fd.get("jumlah_musholla"),
+            musholla_butuh_bantuan:+fd.get("musholla_butuh_bantuan"),
+            guru_ngaji:+fd.get("guru_ngaji"),
+            pesantren:+fd.get("pesantren")
+        };
+
+        if(editIndex !== null){
+            data.keagamaan[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.keagamaan[desa].push(obj);
+        }
+           tambahNotifikasi(desa, "KEAGAMAAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.keagamaan[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.jumlah_masjid}</td>
+                <td>${r.masjid_butuh_bantuan}</td>
+                <td>${r.jumlah_musholla}</td>
+                <td>${r.musholla_butuh_bantuan}</td>
+                <td>${r.guru_ngaji}</td>
+                <td>${r.pesantren}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.keagamaan[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.keagamaan[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== INFRASTRUKTUR JALAN =====
+function infrastrukturDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.infrastruktur) data.infrastruktur = {};
+    if(!data.infrastruktur[desa]) data.infrastruktur[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA INFRASTRUKTUR JALAN DESA ${desa}</h3>
+
+    <form id="formInfra">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'aspal',label:'Jalan Aspal (Meter)'},
+            {key:'aspal_rusak',label:'Aspal Rusak (Meter)'},
+            {key:'paving',label:'Jalan Paving (Meter)'},
+            {key:'paving_rusak',label:'Paving Rusak (Meter)'},
+            {key:'mackadam',label:'Jalan Mackadam (Meter)'},
+            {key:'mackadam_rusak',label:'Mackadam Rusak (Meter)'},
+            {key:'tanah',label:'Jalan Tanah (Meter)'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Aspal</th>
+                <th>Aspal Rusak</th>
+                <th>Paving</th>
+                <th>Paving Rusak</th>
+                <th>Mackadam</th>
+                <th>Mackadam Rusak</th>
+                <th>Tanah</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbInfra"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formInfra");
+    const tb   = document.getElementById("tbInfra");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.infrastruktur[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.infrastruktur[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.infrastruktur[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+
+        data.infrastruktur[desa].push(obj);
+         tambahNotifikasi(desa, "INFRASTRUKTUR JALAN");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+
+        const obj = {
+            bulan: fd.get("bulan"),
+            tahun: fd.get("tahun"),
+            aspal:+fd.get("aspal"),
+            aspal_rusak:+fd.get("aspal_rusak"),
+            paving:+fd.get("paving"),
+            paving_rusak:+fd.get("paving_rusak"),
+            mackadam:+fd.get("mackadam"),
+            mackadam_rusak:+fd.get("mackadam_rusak"),
+            tanah:+fd.get("tanah")
+        };
+
+        if(editIndex !== null){
+            data.infrastruktur[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.infrastruktur[desa].push(obj);
+        }
+         tambahNotifikasi(desa, "INFRASTRUKTUR JALAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.infrastruktur[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.aspal}</td>
+                <td>${r.aspal_rusak}</td>
+                <td>${r.paving}</td>
+                <td>${r.paving_rusak}</td>
+                <td>${r.mackadam}</td>
+                <td>${r.mackadam_rusak}</td>
+                <td>${r.tanah}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.infrastruktur[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.infrastruktur[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== PENERIMA BANTUAN DESA =====
+function penerimaBantuan(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.bantuan) data.bantuan = {};
+    if(!data.bantuan[desa]) data.bantuan[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PENERIMA BANTUAN DESA ${desa}</h3>
+
+    <form id="formBantuan">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'pkh',label:'PKH'},
+            {key:'pkh_plus',label:'PKH +'},
+            {key:'blt_kesra',label:'BLT KESRA'},
+            {key:'blt_dd',label:'BLT DD'},
+            {key:'blt_cukai',label:'BLT CUKAI'},
+            {key:'bpnt',label:'BPNT'},
+            {key:'bapang',label:'BAPANG'},
+            {key:'permakanan_lansia',label:'Permakanan Lansia'},
+            {key:'bantuan_lainnya',label:'Bantuan Lainnya'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>PKH</th>
+                <th>PKH+</th>
+                <th>BLT Kesra</th>
+                <th>BLT DD</th>
+                <th>BLT Cukai</th>
+                <th>BPNT</th>
+                <th>Bapang</th>
+                <th>Permakanan</th>
+                <th>Lainnya</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbBantuan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="3">TOTAL</td>
+                <td id="totPkh">0</td>
+                <td id="totPkhPlus">0</td>
+                <td id="totKesra">0</td>
+                <td id="totDd">0</td>
+                <td id="totCukai">0</td>
+                <td id="totBpnt">0</td>
+                <td id="totBapang">0</td>
+                <td id="totPermakanan">0</td>
+                <td id="totLainnya">0</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formBantuan");
+    const tb   = document.getElementById("tbBantuan");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.bantuan[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.bantuan[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.bantuan[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+        data.bantuan[desa].push(obj);
+        tambahNotifikasi(desa, "PENERIMA BANTUAN");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+        const obj = {};
+        fd.forEach((v,k)=> obj[k] = isNaN(v) ? v : +v);
+
+        if(editIndex !== null){
+            data.bantuan[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.bantuan[desa].push(obj);
+        }
+         tambahNotifikasi(desa, "PENERIMA BANTUAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+
+        tb.innerHTML="";
+        let total = {
+            pkh:0, pkh_plus:0, blt_kesra:0, blt_dd:0,
+            blt_cukai:0, bpnt:0, bapang:0,
+            permakanan_lansia:0, bantuan_lainnya:0
+        };
+
+        data.bantuan[desa].forEach((r,i)=>{
+
+            Object.keys(total).forEach(k=>{
+                total[k]+= r[k]||0;
+            });
+
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.pkh||0}</td>
+                <td>${r.pkh_plus||0}</td>
+                <td>${r.blt_kesra||0}</td>
+                <td>${r.blt_dd||0}</td>
+                <td>${r.blt_cukai||0}</td>
+                <td>${r.bpnt||0}</td>
+                <td>${r.bapang||0}</td>
+                <td>${r.permakanan_lansia||0}</td>
+                <td>${r.bantuan_lainnya||0}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+
+        document.getElementById("totPkh").innerText = total.pkh;
+        document.getElementById("totPkhPlus").innerText = total.pkh_plus;
+        document.getElementById("totKesra").innerText = total.blt_kesra;
+        document.getElementById("totDd").innerText = total.blt_dd;
+        document.getElementById("totCukai").innerText = total.blt_cukai;
+        document.getElementById("totBpnt").innerText = total.bpnt;
+        document.getElementById("totBapang").innerText = total.bapang;
+        document.getElementById("totPermakanan").innerText = total.permakanan_lansia;
+        document.getElementById("totLainnya").innerText = total.bantuan_lainnya;
+    }
+
+    window.editData = function(index){
+        const r = data.bantuan[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.bantuan[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== PENDIDIKAN DESA =====
+function pendidikanDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.pendidikan) data.pendidikan = {};
+    if(!data.pendidikan[desa]) data.pendidikan[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PENDIDIKAN DESA ${desa}</h3>
+
+    <form id="formPendidikan">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'kb',label:'KB'},
+            {key:'tk',label:'TK/RA'},
+            {key:'sd',label:'SD/MI'},
+            {key:'smp',label:'SMP/MTs'},
+            {key:'pkbm',label:'PKBM'},
+            {key:'bos',label:'BOS'},
+            {key:'pip',label:'PIP'},
+            {key:'mbg',label:'Penerima MBG'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>KB</th>
+                <th>TK/RA</th>
+                <th>SD/MI</th>
+                <th>SMP/MTs</th>
+                <th>PKBM</th>
+                <th>BOS</th>
+                <th>PIP</th>
+                <th>MBG</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbPendidikan"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formPendidikan");
+    const tb   = document.getElementById("tbPendidikan");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.pendidikan[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.pendidikan[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.pendidikan[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+        data.pendidikan[desa].push(obj);
+       tambahNotifikasi(desa, "PENDIDIKAN"); 
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+
+        const obj = {
+            bulan: fd.get("bulan"),
+            tahun: fd.get("tahun"),
+            kb:+fd.get("kb"),
+            tk:+fd.get("tk"),
+            sd:+fd.get("sd"),
+            smp:+fd.get("smp"),
+            pkbm:+fd.get("pkbm"),
+            bos:+fd.get("bos"),
+            pip:+fd.get("pip"),
+            mbg:+fd.get("mbg")
+        };
+
+        if(editIndex !== null){
+            data.pendidikan[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.pendidikan[desa].push(obj);
+        }
+         tambahNotifikasi(desa, "PENDIDIKAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.pendidikan[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.kb}</td>
+                <td>${r.tk}</td>
+                <td>${r.sd}</td>
+                <td>${r.smp}</td>
+                <td>${r.pkbm}</td>
+                <td>${r.bos}</td>
+                <td>${r.pip}</td>
+                <td>${r.mbg}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.pendidikan[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.pendidikan[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== UMKM DESA =====
+function umkmDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.umkm) data.umkm = {};
+    if(!data.umkm[desa]) data.umkm[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA UMKM DESA ${desa}</h3>
+
+    <form id="formUMKM">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        ${[
+            {key:'jumlah_umkm',label:'Jumlah UMKM'},
+            {key:'nib',label:'Mempunyai NIB'},
+            {key:'pirt',label:'Mempunyai PIRT'},
+            {key:'sertifikat_halal',label:'Mempunyai Sertifikat Halal'},
+            {key:'bantuan_umkm',label:'Penerima Bantuan UMKM'}
+        ].map(f=>`
+            <label>${f.label}</label>
+            <input type="number" name="${f.key}" required>
+        `).join("")}
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Jumlah UMKM</th>
+                <th>NIB</th>
+                <th>PIRT</th>
+                <th>Sertifikat Halal</th>
+                <th>Penerima Bantuan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbUMKM"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formUMKM");
+    const tb   = document.getElementById("tbUMKM");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.umkm[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.umkm[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.umkm[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+        data.umkm[desa].push(obj);
+        tambahNotifikasi(desa, "UMKM");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+
+        const obj = {
+            bulan: fd.get("bulan"),
+            tahun: fd.get("tahun"),
+            jumlah_umkm:+fd.get("jumlah_umkm"),
+            nib:+fd.get("nib"),
+            pirt:+fd.get("pirt"),
+            sertifikat_halal:+fd.get("sertifikat_halal"),
+            bantuan_umkm:+fd.get("bantuan_umkm")
+        };
+
+        if(editIndex !== null){
+            data.umkm[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.umkm[desa].push(obj);
+        }
+         tambahNotifikasi(desa, "UMKM");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.umkm[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.jumlah_umkm}</td>
+                <td>${r.nib}</td>
+                <td>${r.pirt}</td>
+                <td>${r.sertifikat_halal}</td>
+                <td>${r.bantuan_umkm}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.umkm[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.umkm[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+
+// ===== PERTANIAN DESA =====
+function pertanianDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.pertanian) data.pertanian = {};
+    if(!data.pertanian[desa]) data.pertanian[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PERTANIAN DESA ${desa}</h3>
+
+    <form id="formPertanian">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        <label>Petani</label>
+        <input type="number" name="petani" required>
+
+        <label>Buruh Tani</label>
+        <input type="number" name="buruh_tani" required>
+
+        <label>Kelompok Tani</label>
+        <input type="number" name="kelompok_tani" required>
+
+        <h4>Kebutuhan Pupuk</h4>
+
+        <label>Urea</label>
+        <input type="number" name="urea" required>
+
+        <label>NPK</label>
+        <input type="number" name="npk" required>
+
+        <label>ZA</label>
+        <input type="number" name="za" required>
+
+        <label>Organik</label>
+        <input type="number" name="organik" required>
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Petani</th>
+                <th>Buruh Tani</th>
+                <th>Kelompok Tani</th>
+                <th>Urea</th>
+                <th>NPK</th>
+                <th>ZA</th>
+                <th>Organik</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbPertanian"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formPertanian");
+    const tb   = document.getElementById("tbPertanian");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.pertanian[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.pertanian[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.pertanian[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+        data.pertanian[desa].push(obj);
+        tambahNotifikasi(desa, "PERTANIAN");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+        const obj = {};
+        fd.forEach((v,k)=> obj[k] = isNaN(v)?v:+v);
+
+        if(editIndex !== null){
+            data.pertanian[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.pertanian[desa].push(obj);
+        }
+        tambahNotifikasi(desa, "PERTANIAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.pertanian[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.petani}</td>
+                <td>${r.buruh_tani}</td>
+                <td>${r.kelompok_tani}</td>
+                <td>${r.urea}</td>
+                <td>${r.npk}</td>
+                <td>${r.za}</td>
+                <td>${r.organik}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.pertanian[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.pertanian[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== PETERNAKAN & PERIKANAN DESA =====
+function peternakanDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.peternakan) data.peternakan = {};
+    if(!data.peternakan[desa]) data.peternakan[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PETERNAKAN & PERIKANAN DESA ${desa}</h3>
+
+    <form id="formPeternakan">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        <label>Kelompok Peternakan</label>
+        <input type="number" name="kelompok_peternakan" required>
+
+        <label>Kelompok Perikanan</label>
+        <input type="number" name="kelompok_perikanan" required>
+
+        <label>Penerima Bantuan Peternakan</label>
+        <input type="number" name="bantuan_peternakan" required>
+
+        <label>Penerima Bantuan Perikanan</label>
+        <input type="number" name="bantuan_perikanan" required>
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Kelompok Peternakan</th>
+                <th>Kelompok Perikanan</th>
+                <th>Bantuan Peternakan</th>
+                <th>Bantuan Perikanan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbPeternakan"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formPeternakan");
+    const tb   = document.getElementById("tbPeternakan");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.peternakan[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.peternakan[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.peternakan[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+        data.peternakan[desa].push(obj);
+        tambahNotifikasi(desa, "PETERNAKAN PERIKANAN");
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+        const obj = {};
+        fd.forEach((v,k)=> obj[k] = isNaN(v)?v:+v);
+
+        if(editIndex !== null){
+            data.peternakan[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.peternakan[desa].push(obj);
+        }
+        tambahNotifikasi(desa, "PETERNAKAN PERIKANAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.peternakan[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.kelompok_peternakan}</td>
+                <td>${r.kelompok_perikanan}</td>
+                <td>${r.bantuan_peternakan}</td>
+                <td>${r.bantuan_perikanan}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.peternakan[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.peternakan[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== PERKEBUNAN & KEHUTANAN DESA =====
+function perkebunanDesa(desa){
+
+    if(currentUser.role === "desa" && currentUser.desa !== desa){
+        alert("Anda tidak punya akses ke desa ini!");
+        return;
+    }
+
+    if(!data.perkebunan) data.perkebunan = {};
+    if(!data.perkebunan[desa]) data.perkebunan[desa] = [];
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PERKEBUNAN & KEHUTANAN DESA ${desa}</h3>
+
+    <form id="formPerkebunan">
+
+        <label>Bulan</label>
+        <select name="bulan" required>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join("")}
+        </select>
+
+        <label>Tahun</label>
+        <select name="tahun" required>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join("")}
+        </select>
+
+        <label>Kelompok Perkebunan</label>
+        <input type="number" name="kelompok_perkebunan" required>
+
+        <label>Kelompok Kehutanan</label>
+        <input type="number" name="kelompok_kehutanan" required>
+
+        <label>Penerima Bantuan Perkebunan</label>
+        <input type="number" name="bantuan_perkebunan" required>
+
+        <label>Penerima Bantuan Kehutanan</label>
+        <input type="number" name="bantuan_kehutanan" required>
+
+        <br><br>
+        <button type="button" id="btnTetap">TETAP</button>
+        <button type="button" id="btnUbah">UBAH DATA</button>
+        <button type="button" id="btnSimpan">SIMPAN</button>
+
+    </form>
+
+    <hr>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Kelompok Perkebunan</th>
+                <th>Kelompok Kehutanan</th>
+                <th>Bantuan Perkebunan</th>
+                <th>Bantuan Kehutanan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tbPerkebunan"></tbody>
+    </table>
+
+    <style>
+        #btnTetap{background:#007bff;color:white;border:none;padding:6px 12px;}
+        #btnUbah{background:#fd7e14;color:white;border:none;padding:6px 12px;}
+        #btnSimpan{background:#6f42c1;color:white;border:none;padding:6px 12px;}
+        .btn-edit{background:#28a745;color:white;border:none;padding:4px 8px;}
+        .btn-hapus{background:#dc3545;color:white;border:none;padding:4px 8px;}
+        button:hover{opacity:0.85;}
+    </style>
+    `;
+
+    const form = document.getElementById("formPerkebunan");
+    const tb   = document.getElementById("tbPerkebunan");
+    const inputs = form.querySelectorAll("input[type='number']");
+
+    let editIndex = null;
+
+    function setDisabled(status){
+        inputs.forEach(i => i.disabled = status);
+    }
+
+    function ambilDataTerakhir(){
+        const list = data.perkebunan[desa];
+        if(!list || list.length===0) return null;
+        return list[list.length-1];
+    }
+
+    function cariData(bulan,tahun){
+        return data.perkebunan[desa]
+            .findIndex(d=>d.bulan===bulan && d.tahun===tahun);
+    }
+
+    function bersihkanForm(){
+        form.reset();
+        editIndex = null;
+        setDisabled(false);
+    }
+
+    // ===== PILIH BULAN =====
+    form.bulan.onchange = function(){
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        const index = cariData(bulan,tahun);
+
+        if(index !== -1){
+            const r = data.perkebunan[desa][index];
+            Object.keys(r).forEach(k=>{
+                if(form[k]) form[k].value = r[k];
+            });
+            editIndex = index;
+            setDisabled(false);
+            return;
+        }
+
+        const last = ambilDataTerakhir();
+
+        if(last){
+            Object.keys(last).forEach(k=>{
+                if(k !== "bulan" && k !== "tahun"){
+                    if(form[k]) form[k].value = last[k];
+                }
+            });
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    };
+
+    // ===== TETAP =====
+    document.getElementById("btnTetap").onclick = function(){
+
+        const last = ambilDataTerakhir();
+        if(!last) return alert("Belum ada data sebelumnya");
+
+        const bulan = form.bulan.value;
+        const tahun = form.tahun.value;
+
+        if(cariData(bulan,tahun)!==-1)
+            return alert("Data sudah ada!");
+
+        const obj = {...last,bulan,tahun};
+        data.perkebunan[desa].push(obj);
+        tambahNotifikasi(desa, "PERKEBUNAN & PERHUTANAN")
+        save(); render(); bersihkanForm();
+    };
+
+    // ===== UBAH DATA =====
+    document.getElementById("btnUbah").onclick = function(){
+        setDisabled(false);
+    };
+
+    // ===== SIMPAN =====
+    document.getElementById("btnSimpan").onclick = function(){
+
+        const fd = new FormData(form);
+        const obj = {};
+        fd.forEach((v,k)=> obj[k] = isNaN(v)?v:+v);
+
+        if(editIndex !== null){
+            data.perkebunan[desa][editIndex] = obj;
+        }else{
+            if(cariData(obj.bulan,obj.tahun)!==-1)
+                return alert("Data sudah ada!");
+            data.perkebunan[desa].push(obj);
+        }
+          tambahNotifikasi(desa, "PERKEBUNAN & PERHUTANAN");
+        save(); render(); bersihkanForm();
+    };
+
+    function render(){
+        tb.innerHTML="";
+        data.perkebunan[desa].forEach((r,i)=>{
+            tb.innerHTML+=`
+            <tr>
+                <td>${i+1}</td>
+                <td>${r.bulan}</td>
+                <td>${r.tahun}</td>
+                <td>${r.kelompok_perkebunan}</td>
+                <td>${r.kelompok_kehutanan}</td>
+                <td>${r.bantuan_perkebunan}</td>
+                <td>${r.bantuan_kehutanan}</td>
+                <td>
+                    <button class="btn-edit" onclick="editData(${i})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${i})">Hapus</button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    window.editData = function(index){
+        const r = data.perkebunan[desa][index];
+        Object.keys(r).forEach(k=>{
+            if(form[k]) form[k].value = r[k];
+        });
+        editIndex = index;
+        setDisabled(false);
+    };
+
+    window.hapusData = function(index){
+        if(!confirm("Yakin hapus?")) return;
+        data.perkebunan[desa].splice(index,1);
+        save(); render(); bersihkanForm();
+    };
+
+    render();
+}
+// ===== DATA KECAMATAN =====
+function dataKecamatan(){
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA KEPENDUDUKAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatan">
+      <thead>
+        <tr>
+          <th rowspan="2">No</th>
+          <th rowspan="2">Desa</th>
+          <th rowspan="2">Bulan</th>
+          <th rowspan="2">Tahun</th>
+          ${fields.map(f=>`<th colspan="3">${f.label}</th>`).join('')}
+          <th colspan="3">Penduduk Akhir Bulan Ini</th>
+        </tr>
+        <tr>
+          ${fields.map(f=>'<th>L</th><th>P</th><th>L+P</th>').join('')}
+          <th>L</th><th>P</th><th>L+P</th>
+        </tr>
+      </thead>
+      <tbody id="tbKecamatan"></tbody>
+    </table>
+    </div>
+
+    <div class="slider-container">
+        <canvas id="chartKecamatan"></canvas>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatan");
+    const chartEl = document.getElementById("chartKecamatan");
+
+    function renderTotal(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+
+        let index = 0;
+        let total = {
+            penduduk_awal:{l:0,p:0,t:0},
+            lahir:{l:0,p:0,t:0},
+            meninggal:{l:0,p:0,t:0},
+            pendatang:{l:0,p:0,t:0},
+            pindah:{l:0,p:0,t:0},
+            akhir:{l:0,p:0,t:0}
+        };
+
+        desaList.forEach(desa => {
+
+           const rows = (data.kependudukan?.[desa] || []).filter(r =>
+                (filterB===""||r.bulan===filterB) &&
+                (filterT===""||r.tahun==filterT)
+            );
+
+            rows.forEach(r => {
+
+                index++;
+
+                let akhir = {
+                    l:(r.penduduk_awal?.l||0)+(r.lahir?.l||0)+(r.pendatang?.l||0)
+                      -((r.meninggal?.l||0)+(r.pindah?.l||0)),
+                    p:(r.penduduk_awal?.p||0)+(r.lahir?.p||0)+(r.pendatang?.p||0)
+                      -((r.meninggal?.p||0)+(r.pindah?.p||0))
+                };
+
+                akhir.t = akhir.l + akhir.p;
+
+                fields.forEach(f=>{
+                    total[f.key].l += r[f.key]?.l||0;
+                    total[f.key].p += r[f.key]?.p||0;
+                    total[f.key].t += r[f.key]?.t||0;
+                });
+
+                total.akhir.l += akhir.l;
+                total.akhir.p += akhir.p;
+                total.akhir.t += akhir.t;
+
+                tb.innerHTML += `
+                <tr>
+                    <td>${index}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    ${fields.map(f=>`
+                        <td>${r[f.key]?.l||0}</td>
+                        <td>${r[f.key]?.p||0}</td>
+                        <td>${r[f.key]?.t||0}</td>
+                    `).join('')}
+                    <td>${akhir.l}</td>
+                    <td>${akhir.p}</td>
+                    <td>${akhir.t}</td>
+                </tr>`;
+            });
+        });
+
+        tb.innerHTML += `
+        <tr style="font-weight:bold;background:#dbe9ff;">
+            <td colspan="4">TOTAL</td>
+            ${fields.map(f=>`
+                <td>${total[f.key].l}</td>
+                <td>${total[f.key].p}</td>
+                <td>${total[f.key].t}</td>
+            `).join('')}
+            <td>${total.akhir.l}</td>
+            <td>${total.akhir.p}</td>
+            <td>${total.akhir.t}</td>
+        </tr>`;
+
+        // ===== GRAFIK =====
+        if(window.myChart) window.myChart.destroy();
+
+        const colors = [
+            '#1a73e8','#e91e63','#4caf50','#ff9800',
+            '#9c27b0','#009688','#f44336','#3f51b5'
+        ];
+
+        let desaTotals = {};
+        desaList.forEach(d => desaTotals[d] = 0);
+
+        desaList.forEach(desa => {
+            const rows = (data.kependudukan?.[desa] || []).filter(r =>
+                (filterB===""||r.bulan===filterB) &&
+                (filterT===""||r.tahun==filterT)
+            );
+
+            rows.forEach(r=>{
+                desaTotals[desa] += r.penduduk_awal?.t||0;
+            });
+        });
+
+        window.myChart = new Chart(chartEl,{
+            type:'bar',
+            data:{
+                labels:Object.keys(desaTotals),
+                datasets:[{
+                    data:Object.values(desaTotals),
+                    backgroundColor: colors.slice(0, desaList.length)
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{legend:{display:false}}
+            }
+        });
+    }
+
+    document.querySelector('.btnFilter').onclick = renderTotal;
+
+    document.querySelector('.btnPDF').onclick = async ()=>{
+        await exportPDFResmi(
+            'DATA KEPENDUDUKAN KECAMATAN',
+            'tableKecamatan',
+            'Kependudukan_Kecamatan_Lengkap.pdf',
+            'chartKecamatan'
+        );
+    };
+
+    renderTotal();
+}
+
+
+// ===== EXPORT PDF RESMI =====
+async function exportPDFResmi(title, tableId, fileName, chartId=null){
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF({
+        orientation:'landscape',
+        unit:'pt',
+        format:'a4'
+    });
+
+    const pageWidth  = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    const bulanSelect = document.querySelector("#main-content .filterBulan");
+    const tahunSelect = document.querySelector("#main-content .filterTahun");
+
+    let bulan = bulanSelect?.value || "Semua Bulan";
+    let tahun = tahunSelect?.value || "Semua Tahun";
+
+    // ===== JUDUL =====
+    doc.setFontSize(16);
+    doc.text(title, pageWidth/2, 40,{align:'center'});
+
+    doc.setFontSize(11);
+    doc.text(`Bulan : ${bulan}`,40,65);
+    doc.text(`Tahun : ${tahun}`,40,80);
+
+    // ===== TABEL =====
+    const table = document.getElementById(tableId);
+
+    const canvasTable = await html2canvas(table,{scale:2});
+    const imgTable = canvasTable.toDataURL("image/png");
+
+    const margin = 40;
+    const availableWidth = pageWidth - (margin * 2);
+    const imgHeight = (canvasTable.height * availableWidth) / canvasTable.width;
+
+    doc.addImage(
+        imgTable,
+        'PNG',
+        margin,
+        100,
+        availableWidth,
+        imgHeight
+    );
+
+    // ===== GRAFIK =====
+    if(chartId){
+        const chartCanvas=document.getElementById(chartId);
+        if(chartCanvas){
+            doc.addPage();
+            const chartImage=chartCanvas.toDataURL("image/png");
+
+            doc.text("GRAFIK JUMLAH PENDUDUK", pageWidth/2, 40,{align:'center'});
+
+            doc.addImage(
+                chartImage,
+                'PNG',
+                60,
+                80,
+                pageWidth-120,
+                350
+            );
+        }
+    }
+
+    doc.save(fileName);
+}
+// ===== DATA PRODUKCAPIL KECAMATAN =====
+function dataKecamatanCapil(){
+
+    if(!data.produkcapil) data.produkcapil = {};
+
+    const c=document.getElementById("main-content");
+    c.innerHTML=`<h3>DATA PRODUKCAPIL SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanCapil">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Wajib KTP</th>
+                <th>Usia <17 Punya KTP</th>
+                <th>Usia <17 Tidak KTP</th>
+                <th>Keluarga Wajib KK</th>
+                <th>Keluarga Punya KK</th>
+                <th>Keluarga Tidak KK</th>
+                <th>Anak Punya KIA</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanCapil"></tbody>
+    </table>
+    </div>`;
+
+    const tb=document.getElementById("tbKecamatanCapil");
+
+    function render(){
+
+        const filterB=document.querySelector('.filterBulan').value;
+        const filterT=document.querySelector('.filterTahun').value;
+
+        tb.innerHTML="";
+        let no=0;
+
+        // TOTAL
+        let total = {
+            wajib_ktp:0,
+            usia_kurang_17_punya_ktp:0,
+            usia_kurang_17_tidak_ktp:0,
+            keluarga_wajib_kk:0,
+            keluarga_punya_kk:0,
+            keluarga_tidak_kk:0,
+            anak_punya_kia:0
+        };
+
+        desaList.forEach(desa=>{
+            if(!data.produkcapil[desa]) return;
+
+            data.produkcapil[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+                no++;
+
+                total.wajib_ktp += r.wajib_ktp||0;
+                total.usia_kurang_17_punya_ktp += r.usia_kurang_17_punya_ktp||0;
+                total.usia_kurang_17_tidak_ktp += r.usia_kurang_17_tidak_ktp||0;
+                total.keluarga_wajib_kk += r.keluarga_wajib_kk||0;
+                total.keluarga_punya_kk += r.keluarga_punya_kk||0;
+                total.keluarga_tidak_kk += r.keluarga_tidak_kk||0;
+                total.anak_punya_kia += r.anak_punya_kia||0;
+
+                tb.innerHTML+=`
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.wajib_ktp||0}</td>
+                    <td>${r.usia_kurang_17_punya_ktp||0}</td>
+                    <td>${r.usia_kurang_17_tidak_ktp||0}</td>
+                    <td>${r.keluarga_wajib_kk||0}</td>
+                    <td>${r.keluarga_punya_kk||0}</td>
+                    <td>${r.keluarga_tidak_kk||0}</td>
+                    <td>${r.anak_punya_kia||0}</td>
+                </tr>`;
+            });
+        });
+
+        // BARIS TOTAL
+        tb.innerHTML+=`
+        <tr style="font-weight:bold;background:#dbe9ff;">
+            <td colspan="4">TOTAL KECAMATAN</td>
+            <td>${total.wajib_ktp}</td>
+            <td>${total.usia_kurang_17_punya_ktp}</td>
+            <td>${total.usia_kurang_17_tidak_ktp}</td>
+            <td>${total.keluarga_wajib_kk}</td>
+            <td>${total.keluarga_punya_kk}</td>
+            <td>${total.keluarga_tidak_kk}</td>
+            <td>${total.anak_punya_kia}</td>
+        </tr>`;
+    }
+
+    document.querySelector('.btnFilter').onclick=render;
+
+    document.querySelector('.btnPDF').onclick=()=>{
+        exportTablePDF('DATA PRODUKCAPIL KECAMATAN','tableKecamatanCapil','Produkcapil_Kecamatan.pdf');
+    };
+
+    render();
+}
+// ===== DATA AKSES KESEHATAN KECAMATAN =====
+function dataKecamatanKesehatan(){
+
+    if(!data.kesehatan) data.kesehatan = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA AKSES KESEHATAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanKesehatan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>BPJS</th>
+                <th>ASKES</th>
+                <th>KIS</th>
+                <th>PBI JK</th>
+                <th>JAMPERSAL</th>
+                <th>Akses Lainnya</th>
+                <th>Tidak Punya Akses</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanKesehatan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL KECAMATAN</td>
+                <td id="totBpjs">0</td>
+                <td id="totAskes">0</td>
+                <td id="totKis">0</td>
+                <td id="totPbiJk">0</td>
+                <td id="totJampersal">0</td>
+                <td id="totAksesLainnya">0</td>
+                <td id="totTidakPunya">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatanKesehatan");
+
+    function render(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+        let no = 0;
+
+        let total = {
+            bpjs:0,
+            askes:0,
+            kis:0,
+            pbi_jk:0,
+            jampersal:0,
+            akses_lainnya:0,
+            tidak_punya:0
+        };
+
+        desaList.forEach(desa=>{
+
+            if(!data.kesehatan[desa]) return;
+
+            data.kesehatan[desa]
+            .filter(r =>
+                (filterB === "" || r.bulan === filterB) &&
+                (filterT === "" || r.tahun == filterT)
+            )
+            .forEach(r=>{
+
+                no++;
+
+                total.bpjs += r.bpjs||0;
+                total.askes += r.askes||0;
+                total.kis += r.kis||0;
+                total.pbi_jk += r.pbi_jk||0;
+                total.jampersal += r.jampersal||0;
+                total.akses_lainnya += r.akses_lainnya||0;
+                total.tidak_punya += r.tidak_punya||0;
+
+                tb.innerHTML += `
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.bpjs||0}</td>
+                    <td>${r.askes||0}</td>
+                    <td>${r.kis||0}</td>
+                    <td>${r.pbi_jk||0}</td>
+                    <td>${r.jampersal||0}</td>
+                    <td>${r.akses_lainnya||0}</td>
+                    <td>${r.tidak_punya||0}</td>
+                </tr>`;
+            });
+        });
+
+        // Update Total
+        document.getElementById("totBpjs").innerText = total.bpjs;
+        document.getElementById("totAskes").innerText = total.askes;
+        document.getElementById("totKis").innerText = total.kis;
+        document.getElementById("totPbiJk").innerText = total.pbi_jk;
+        document.getElementById("totJampersal").innerText = total.jampersal;
+        document.getElementById("totAksesLainnya").innerText = total.akses_lainnya;
+        document.getElementById("totTidakPunya").innerText = total.tidak_punya;
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    document.querySelector('.btnPDF').onclick = async ()=>{
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+            orientation:'landscape',
+            unit:'pt',
+            format:'a4'
+        });
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+
+        const bulan = document.querySelector('.filterBulan').value || "Semua Bulan";
+        const tahun = document.querySelector('.filterTahun').value || "Semua Tahun";
+
+        doc.setFontSize(16);
+        doc.text("DATA AKSES KESEHATAN KECAMATAN", pageWidth/2, 40,{align:'center'});
+
+        doc.setFontSize(11);
+        doc.text(`Bulan : ${bulan}`,40,65);
+        doc.text(`Tahun : ${tahun}`,40,80);
+
+        const table = document.getElementById("tableKecamatanKesehatan");
+
+        const canvas = await html2canvas(table,{scale:2});
+        const imgData = canvas.toDataURL("image/png");
+
+        const margin = 40;
+        const availableWidth = pageWidth - (margin*2);
+        const imgHeight = (canvas.height * availableWidth) / canvas.width;
+
+        doc.addImage(imgData,'PNG',margin,100,availableWidth,imgHeight);
+
+        doc.save("Akses_Kesehatan_Kecamatan.pdf");
+    };
+
+    render();
+}
+// ===== KONDISI KHUSUS KECAMATAN =====
+function kondisiKhususKecamatan(){
+
+    if(!data.kondisi) data.kondisi = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA KONDISI KHUSUS SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKondisiKecamatan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Janda</th>
+                <th>Yatim</th>
+                <th>Stunting</th>
+                <th>Difabel</th>
+                <th>RTM</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>D6</th>
+                <th>D7</th>
+                <th>D8</th>
+                <th>RTLH</th>
+            </tr>
+        </thead>
+        <tbody id="tbKondisiKecamatan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL KECAMATAN</td>
+                <td id="tot_janda"></td>
+                <td id="tot_yatim"></td>
+                <td id="tot_stunting"></td>
+                <td id="tot_difabel"></td>
+                <td id="tot_rtm"></td>
+                <td id="tot_d1"></td>
+                <td id="tot_d2"></td>
+                <td id="tot_d3"></td>
+                <td id="tot_d4"></td>
+                <td id="tot_d5"></td>
+                <td id="tot_d6"></td>
+                <td id="tot_d7"></td>
+                <td id="tot_d8"></td>
+                <td id="tot_rtlh"></td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKondisiKecamatan");
+
+    function render(){
+
+        const filterB=document.querySelector('.filterBulan').value;
+        const filterT=document.querySelector('.filterTahun').value;
+
+        tb.innerHTML="";
+        let no=0;
+
+        let total = {
+            janda_70:0, anak_yatim:0, stunting:0, difabel:0,
+            rtm:0, rtm_desil1:0, rtm_desil2:0, rtm_desil3:0,
+            rtm_desil4:0, rtm_desil5:0, rtm_desil6:0,
+            rtm_desil7:0, rtm_desil8:0, rtlh:0
+        };
+
+        desaList.forEach(desa=>{
+
+            if(!data.kondisi[desa]) return;
+
+            data.kondisi[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+
+                no++;
+
+                Object.keys(total).forEach(k=>{
+                    total[k] += r[k] || 0;
+                });
+
+                tb.innerHTML+=`
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.janda_70}</td>
+                    <td>${r.anak_yatim}</td>
+                    <td>${r.stunting}</td>
+                    <td>${r.difabel}</td>
+                    <td>${r.rtm}</td>
+                    <td>${r.rtm_desil1}</td>
+                    <td>${r.rtm_desil2}</td>
+                    <td>${r.rtm_desil3}</td>
+                    <td>${r.rtm_desil4}</td>
+                    <td>${r.rtm_desil5}</td>
+                    <td>${r.rtm_desil6}</td>
+                    <td>${r.rtm_desil7}</td>
+                    <td>${r.rtm_desil8}</td>
+                    <td>${r.rtlh}</td>
+                </tr>`;
+            });
+        });
+
+        // Update Total
+        document.getElementById("tot_janda").innerText = total.janda_70;
+        document.getElementById("tot_yatim").innerText = total.anak_yatim;
+        document.getElementById("tot_stunting").innerText = total.stunting;
+        document.getElementById("tot_difabel").innerText = total.difabel;
+        document.getElementById("tot_rtm").innerText = total.rtm;
+        document.getElementById("tot_d1").innerText = total.rtm_desil1;
+        document.getElementById("tot_d2").innerText = total.rtm_desil2;
+        document.getElementById("tot_d3").innerText = total.rtm_desil3;
+        document.getElementById("tot_d4").innerText = total.rtm_desil4;
+        document.getElementById("tot_d5").innerText = total.rtm_desil5;
+        document.getElementById("tot_d6").innerText = total.rtm_desil6;
+        document.getElementById("tot_d7").innerText = total.rtm_desil7;
+        document.getElementById("tot_d8").innerText = total.rtm_desil8;
+        document.getElementById("tot_rtlh").innerText = total.rtlh;
+    }
+
+    document.querySelector('.btnFilter').onclick=render;
+
+    document.querySelector('.btnPDF').onclick=()=>{
+        exportTablePDF(
+            'DATA KONDISI KHUSUS KECAMATAN',
+            'tableKondisiKecamatan',
+            'Kondisi_Khusus_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+function dataKeagamaanKecamatan(){
+
+    if(!data.keagamaan) data.keagamaan = {};
+
+    const c = document.getElementById("main-content");
+    c.innerHTML = `
+    <h3>DATA KEAGAMAAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKeagamaanKecamatan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Jumlah Masjid</th>
+                <th>Masjid Butuh Bantuan</th>
+                <th>Jumlah Musholla</th>
+                <th>Musholla Butuh Bantuan</th>
+                <th>Guru Ngaji</th>
+                <th>Pesantren</th>
+            </tr>
+        </thead>
+        <tbody id="tbKeagamaanKecamatan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL</td>
+                <td id="totMasjid">0</td>
+                <td id="totMasjidBantuan">0</td>
+                <td id="totMusholla">0</td>
+                <td id="totMushollaBantuan">0</td>
+                <td id="totGuruNgaji">0</td>
+                <td id="totPesantren">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKeagamaanKecamatan");
+
+    function render(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+        let no = 1;
+
+        let totMasjid=0,
+            totMasjidBantuan=0,
+            totMusholla=0,
+            totMushollaBantuan=0,
+            totGuruNgaji=0,
+            totPesantren=0;
+
+        desaList.forEach(desa=>{
+            if(!data.keagamaan[desa]) return;
+
+            data.keagamaan[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+
+                let masjid = r.jumlah_masjid||0;
+                let masjidBantuan = r.masjid_butuh_bantuan||0;
+                let musholla = r.jumlah_musholla||0;
+                let mushollaBantuan = r.musholla_butuh_bantuan||0;
+                let guru = r.guru_ngaji||0;
+                let pesantren = r.pesantren||0;
+
+                totMasjid += masjid;
+                totMasjidBantuan += masjidBantuan;
+                totMusholla += musholla;
+                totMushollaBantuan += mushollaBantuan;
+                totGuruNgaji += guru;
+                totPesantren += pesantren;
+
+                tb.innerHTML += `
+                <tr>
+                    <td>${no++}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${masjid}</td>
+                    <td>${masjidBantuan}</td>
+                    <td>${musholla}</td>
+                    <td>${mushollaBantuan}</td>
+                    <td>${guru}</td>
+                    <td>${pesantren}</td>
+                </tr>`;
+            });
+        });
+
+        document.getElementById("totMasjid").innerText = totMasjid;
+        document.getElementById("totMasjidBantuan").innerText = totMasjidBantuan;
+        document.getElementById("totMusholla").innerText = totMusholla;
+        document.getElementById("totMushollaBantuan").innerText = totMushollaBantuan;
+        document.getElementById("totGuruNgaji").innerText = totGuruNgaji;
+        document.getElementById("totPesantren").innerText = totPesantren;
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    document.querySelector('.btnPDF').onclick = ()=>{
+        exportTablePDF(
+            'DATA KEAGAMAAN KECAMATAN',
+            'tableKeagamaanKecamatan',
+            'Keagamaan_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+// ===== DATA INFRASTRUKTUR JALAN KECAMATAN =====
+function dataKecamatanInfra(){
+    if(!data.infrastruktur) data.infrastruktur = {};
+
+    const c=document.getElementById("main-content");
+    c.innerHTML=`
+    <h3>DATA INFRASTRUKTUR JALAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanInfra">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Aspal (M)</th>
+                <th>Aspal Rusak (M)</th>
+                <th>Paving (M)</th>
+                <th>Paving Rusak (M)</th>
+                <th>Mackadam (M)</th>
+                <th>Mackadam Rusak (M)</th>
+                <th>Tanah (M)</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanInfra"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#f0f0f0;">
+                <td colspan="4">TOTAL</td>
+                <td id="totAspal">0</td>
+                <td id="totAspalRusak">0</td>
+                <td id="totPaving">0</td>
+                <td id="totPavingRusak">0</td>
+                <td id="totMackadam">0</td>
+                <td id="totMackadamRusak">0</td>
+                <td id="totTanah">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb=document.getElementById("tbKecamatanInfra");
+
+    function render(){
+
+        const filterB=document.querySelector('.filterBulan').value;
+        const filterT=document.querySelector('.filterTahun').value;
+
+        tb.innerHTML="";
+        let no=0;
+
+        let totAspal=0,
+            totAspalRusak=0,
+            totPaving=0,
+            totPavingRusak=0,
+            totMackadam=0,
+            totMackadamRusak=0,
+            totTanah=0;
+
+        desaList.forEach(desa=>{
+            if(!data.infrastruktur[desa]) return;
+
+            data.infrastruktur[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+                no++;
+
+                let aspal = Number(r.aspal||0);
+                let aspal_rusak = Number(r.aspal_rusak||0);
+                let paving = Number(r.paving||0);
+                let paving_rusak = Number(r.paving_rusak||0);
+                let mackadam = Number(r.mackadam||0);
+                let mackadam_rusak = Number(r.mackadam_rusak||0);
+                let tanah = Number(r.tanah||0);
+
+                totAspal+=aspal;
+                totAspalRusak+=aspal_rusak;
+                totPaving+=paving;
+                totPavingRusak+=paving_rusak;
+                totMackadam+=mackadam;
+                totMackadamRusak+=mackadam_rusak;
+                totTanah+=tanah;
+
+                tb.innerHTML+=`
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${aspal}</td>
+                    <td>${aspal_rusak}</td>
+                    <td>${paving}</td>
+                    <td>${paving_rusak}</td>
+                    <td>${mackadam}</td>
+                    <td>${mackadam_rusak}</td>
+                    <td>${tanah}</td>
+                </tr>`;
+            });
+        });
+
+        // isi total
+        document.getElementById("totAspal").innerText = totAspal;
+        document.getElementById("totAspalRusak").innerText = totAspalRusak;
+        document.getElementById("totPaving").innerText = totPaving;
+        document.getElementById("totPavingRusak").innerText = totPavingRusak;
+        document.getElementById("totMackadam").innerText = totMackadam;
+        document.getElementById("totMackadamRusak").innerText = totMackadamRusak;
+        document.getElementById("totTanah").innerText = totTanah;
+    }
+
+    document.querySelector('.btnFilter').onclick=render;
+
+    document.querySelector('.btnPDF').onclick=()=>{
+        exportTablePDF(
+            'DATA INFRASTRUKTUR JALAN KECAMATAN',
+            'tableKecamatanInfra',
+            'Infrastruktur_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+// ===== DATA PENERIMA BANTUAN KECAMATAN =====
+function dataKecamatanBantuan(){
+
+    if(!data.bantuan) data.bantuan = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PENERIMA BANTUAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanBantuan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>PKH</th>
+                <th>PKH +</th>
+                <th>BLT KESRA</th>
+                <th>BLT DD</th>
+                <th>BLT CUKAI</th>
+                <th>BPNT</th>
+                <th>BAPANG</th>
+                <th>PERMAKANAN LANSIA</th>
+                <th>BANTUAN LAINNYA</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanBantuan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL KECAMATAN</td>
+                <td id="totPkh">0</td>
+                <td id="totPkhPlus">0</td>
+                <td id="totBltKesra">0</td>
+                <td id="totBltDd">0</td>
+                <td id="totBltCukai">0</td>
+                <td id="totBpnt">0</td>
+                <td id="totBapang">0</td>
+                <td id="totPermakanan">0</td>
+                <td id="totLainnya">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatanBantuan");
+
+    function render(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+        let no = 0;
+
+        let total = {
+            pkh:0,
+            pkh_plus:0,
+            blt_kesra:0,
+            blt_dd:0,
+            blt_cukai:0,
+            bpnt:0,
+            bapang:0,
+            permakanan_lansia:0,
+            bantuan_lainnya:0
+        };
+
+        desaList.forEach(desa=>{
+
+            if(!data.bantuan[desa]) return;
+
+            data.bantuan[desa]
+            .filter(r =>
+                (filterB === "" || r.bulan === filterB) &&
+                (filterT === "" || r.tahun == filterT)
+            )
+            .forEach(r=>{
+
+                no++;
+
+                total.pkh += r.pkh||0;
+                total.pkh_plus += r.pkh_plus||0;
+                total.blt_kesra += r.blt_kesra||0;
+                total.blt_dd += r.blt_dd||0;
+                total.blt_cukai += r.blt_cukai||0;
+                total.bpnt += r.bpnt||0;
+                total.bapang += r.bapang||0;
+                total.permakanan_lansia += r.permakanan_lansia||0;
+                total.bantuan_lainnya += r.bantuan_lainnya||0;
+
+                tb.innerHTML += `
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.pkh||0}</td>
+                    <td>${r.pkh_plus||0}</td>
+                    <td>${r.blt_kesra||0}</td>
+                    <td>${r.blt_dd||0}</td>
+                    <td>${r.blt_cukai||0}</td>
+                    <td>${r.bpnt||0}</td>
+                    <td>${r.bapang||0}</td>
+                    <td>${r.permakanan_lansia||0}</td>
+                    <td>${r.bantuan_lainnya||0}</td>
+                </tr>`;
+            });
+        });
+
+        // ===== UPDATE TOTAL =====
+        document.getElementById("totPkh").innerText = total.pkh;
+        document.getElementById("totPkhPlus").innerText = total.pkh_plus;
+        document.getElementById("totBltKesra").innerText = total.blt_kesra;
+        document.getElementById("totBltDd").innerText = total.blt_dd;
+        document.getElementById("totBltCukai").innerText = total.blt_cukai;
+        document.getElementById("totBpnt").innerText = total.bpnt;
+        document.getElementById("totBapang").innerText = total.bapang;
+        document.getElementById("totPermakanan").innerText = total.permakanan_lansia;
+        document.getElementById("totLainnya").innerText = total.bantuan_lainnya;
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    
+   document.querySelector('.btnPDF').onclick = ()=>{
+    exportTablePDF(
+        'DATA PENERIMA BANTUAN KECAMATAN',
+        'tableKecamatanBantuan',
+        'Penerima_Bantuan_Kecamatan.pdf'
+    );
+};
+
+    render();
+}
+function dataKecamatanPendidikan(){
+
+    if(!data.pendidikan) data.pendidikan = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PENDIDIKAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option value="${b}">${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option value="${t}">${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanPendidikan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>KB</th>
+                <th>TK/RA</th>
+                <th>SD/MI</th>
+                <th>SMP/MTs</th>
+                <th>PKBM</th>
+                <th>BOS</th>
+                <th>PIP</th>
+                <th>MBG</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanPendidikan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL KECAMATAN</td>
+                <td id="totKb">0</td>
+                <td id="totTk">0</td>
+                <td id="totSd">0</td>
+                <td id="totSmp">0</td>
+                <td id="totPkbm">0</td>
+                <td id="totBos">0</td>
+                <td id="totPip">0</td>
+                <td id="totMbg">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatanPendidikan");
+
+    function render(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+        let no = 0;
+
+        let total = {
+            kb:0,
+            tk:0,
+            sd:0,
+            smp:0,
+            pkbm:0,
+            bos:0,
+            pip:0,
+            mbg:0
+        };
+
+        desaList.forEach(desa=>{
+
+            if(!data.pendidikan[desa]) return;
+
+            data.pendidikan[desa]
+            .filter(r =>
+                (filterB === "" || r.bulan === filterB) &&
+                (filterT === "" || r.tahun == filterT)
+            )
+            .forEach(r=>{
+
+                no++;
+
+                total.kb += r.kb||0;
+                total.tk += r.tk||0;
+                total.sd += r.sd||0;
+                total.smp += r.smp||0;
+                total.pkbm += r.pkbm||0;
+                total.bos += r.bos||0;
+                total.pip += r.pip||0;
+                total.mbg += r.mbg||0;
+
+                tb.innerHTML += `
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.kb||0}</td>
+                    <td>${r.tk||0}</td>
+                    <td>${r.sd||0}</td>
+                    <td>${r.smp||0}</td>
+                    <td>${r.pkbm||0}</td>
+                    <td>${r.bos||0}</td>
+                    <td>${r.pip||0}</td>
+                    <td>${r.mbg||0}</td>
+                </tr>`;
+            });
+        });
+
+        document.getElementById("totKb").innerText = total.kb;
+        document.getElementById("totTk").innerText = total.tk;
+        document.getElementById("totSd").innerText = total.sd;
+        document.getElementById("totSmp").innerText = total.smp;
+        document.getElementById("totPkbm").innerText = total.pkbm;
+        document.getElementById("totBos").innerText = total.bos;
+        document.getElementById("totPip").innerText = total.pip;
+        document.getElementById("totMbg").innerText = total.mbg;
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    document.querySelector('.btnPDF').onclick = ()=>{
+        exportTablePDF(
+            'DATA PENDIDIKAN KECAMATAN',
+            'tableKecamatanPendidikan',
+            'Pendidikan_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+
+// ===== DATA PETERNAKAN KECAMATAN =====
+function dataKecamatanPeternakan(){
+
+    if(!data.peternakan) data.peternakan = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PETERNAKAN & PERIKANAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanPeternakan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Kelompok Peternakan</th>
+                <th>Kelompok Perikanan</th>
+                <th>Bantuan Peternakan</th>
+                <th>Bantuan Perikanan</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanPeternakan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL</td>
+                <td id="totKelompokTernak">0</td>
+                <td id="totKelompokIkan">0</td>
+                <td id="totBantuanTernak">0</td>
+                <td id="totBantuanIkan">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatanPeternakan");
+
+    function render(){
+
+        const filterB=document.querySelector('.filterBulan').value;
+        const filterT=document.querySelector('.filterTahun').value;
+
+        tb.innerHTML="";
+        let no=0;
+
+        let total={
+            kelompok_peternakan:0,
+            kelompok_perikanan:0,
+            bantuan_peternakan:0,
+            bantuan_perikanan:0
+        };
+
+        desaList.forEach(desa=>{
+            if(!data.peternakan[desa]) return;
+
+            data.peternakan[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+                no++;
+
+                total.kelompok_peternakan += r.kelompok_peternakan||0;
+                total.kelompok_perikanan += r.kelompok_perikanan||0;
+                total.bantuan_peternakan += r.bantuan_peternakan||0;
+                total.bantuan_perikanan += r.bantuan_perikanan||0;
+
+                tb.innerHTML+=`
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.kelompok_peternakan||0}</td>
+                    <td>${r.kelompok_perikanan||0}</td>
+                    <td>${r.bantuan_peternakan||0}</td>
+                    <td>${r.bantuan_perikanan||0}</td>
+                </tr>`;
+            });
+        });
+
+        document.getElementById("totKelompokTernak").innerText = total.kelompok_peternakan;
+        document.getElementById("totKelompokIkan").innerText = total.kelompok_perikanan;
+        document.getElementById("totBantuanTernak").innerText = total.bantuan_peternakan;
+        document.getElementById("totBantuanIkan").innerText = total.bantuan_perikanan;
+    }
+
+    document.querySelector('.btnFilter').onclick=render;
+
+    document.querySelector('.btnPDF').onclick=()=>{
+        exportTablePDF(
+            'DATA PETERNAKAN & PERIKANAN KECAMATAN',
+            'tableKecamatanPeternakan',
+            'Peternakan_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+// ================= UPDATE BADGE =================
+function updateBadge(){
+
+    const badge = document.getElementById("badgeNotif");
+    if(!badge) return;
+
+    if(!data.notifikasi) data.notifikasi = [];
+
+    const jumlahBelumDibaca = data.notifikasi
+        .filter(n => n.dibaca !== true)
+        .length;
+
+    badge.innerText = jumlahBelumDibaca;
+    badge.style.display = jumlahBelumDibaca > 0 ? "inline-block" : "none";
+}
+
+
+// ================= TAMPIL NOTIFIKASI =================
+function tampilNotifikasi(){
+
+    if(currentUser.role !== "kecamatan"){
+        alert("Menu Notifikasi hanya bisa diakses Admin Kecamatan!");
+        return;
+    }
+
+    if(!data.notifikasi) data.notifikasi = [];
+
+    // ✅ Tandai semua sebagai dibaca
+    data.notifikasi.forEach(n=>{
+        n.dibaca = true;
+    });
+
+    save();
+    updateBadge();
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+        <h3>NOTIFIKASI PENGIRIMAN DATA DESA</h3>
+
+        <div class="filter-div">
+            <label>Bulan:</label>
+            <select class="filterBulan">
+                <option value="">-- Semua Bulan --</option>
+                ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+            </select>
+
+            <label>Tahun:</label>
+            <select class="filterTahun">
+                <option value="">-- Semua Tahun --</option>
+                ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+            </select>
+
+            <button class="btnFilter">Filter</button>
+            <button class="btnPDF">Export PDF</button>
+        </div>
+
+        <div class="table-wrapper">
+        <table id="tableNotifikasi">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Desa</th>
+                    <th>Jenis Form</th>
+                    <th>Tanggal</th>
+                    <th>Jam</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="tbNotifikasi"></tbody>
+        </table>
+        </div>
+    `;
+
+    const tb = document.getElementById("tbNotifikasi");
+
+    function render(){
+
+        tb.innerHTML = "";
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        let filtered = data.notifikasi
+        .slice()
+        .sort((a,b)=> b.timestamp - a.timestamp)
+        .filter(n=>{
+
+            if(filterB === "" && filterT === "") return true;
+
+            const [hari, bulan, tahun] = n.tanggal.split("/");
+            let bulanNama = bulanList[parseInt(bulan) - 1];
+
+            let bulanMatch = (filterB === "" || bulanNama === filterB);
+            let tahunMatch = (filterT === "" || tahun === filterT);
+
+            return bulanMatch && tahunMatch;
+        });
+
+        if(filtered.length === 0){
+            tb.innerHTML = `<tr><td colspan="6">Tidak ada data</td></tr>`;
+            return;
+        }
+
+        filtered.forEach((n,i)=>{
+
+            const originalIndex = data.notifikasi.findIndex(x => x.timestamp === n.timestamp);
+
+            tb.innerHTML += `
+                <tr>
+                    <td>${i+1}</td>
+                    <td>${n.desa}</td>
+                    <td>${n.form}</td>
+                    <td>${n.tanggal}</td>
+                    <td>${n.jam}</td>
+                    <td>
+                        <button class="delete-btn" data-index="${originalIndex}">
+                            Hapus
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // Hapus notifikasi
+        document.querySelectorAll('.delete-btn').forEach(btn=>{
+            btn.onclick = ()=>{
+
+                const index = parseInt(btn.dataset.index);
+
+                if(currentUser.role === "kecamatan"){
+
+                    const pass = prompt("Masukkan password Admin Kecamatan");
+
+                    if(pass !== adminAccounts['KECAMATAN']){
+                        alert("Password salah!");
+                        return;
+                    }
+
+                    if(!confirm("Yakin hapus notifikasi ini?")) return;
+
+                    data.notifikasi.splice(index,1);
+                    save();
+                    updateBadge();
+                    render();
+                }
+            }
+        });
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    document.querySelector('.btnPDF').onclick = ()=>{
+        exportTablePDF(
+            'NOTIFIKASI PENGIRIMAN DATA DESA',
+            'tableNotifikasi',
+            'Notifikasi_Data_Desa.pdf'
+        );
+    };
+
+    render();
+}
+
+
+// ================= JALANKAN SAAT LOAD =================
+updateBadge();
+
+// ================= DATA KECAMATAN PERTANIAN =================
+function dataKecamatanPertanian(){
+
+    if(!data.pertanian) data.pertanian = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+        <h3>DATA PERTANIAN SELURUH DESA</h3>
+
+        <div class="filter-div">
+            <label>Bulan:</label>
+            <select class="filterBulan">
+                <option value="">-- Semua Bulan --</option>
+                ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+            </select>
+
+            <label>Tahun:</label>
+            <select class="filterTahun">
+                <option value="">-- Semua Tahun --</option>
+                ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+            </select>
+
+            <button class="btnFilter">Filter</button>
+            <button class="btnPDF">Export PDF</button>
+        </div>
+
+        <div class="table-wrapper">
+        <table id="tableKecamatanPertanian">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Desa</th>
+                    <th>Bulan</th>
+                    <th>Tahun</th>
+                    <th>Petani</th>
+                    <th>Buruh Tani</th>
+                    <th>Kelompok Tani</th>
+                    <th>Urea</th>
+                    <th>NPK</th>
+                    <th>ZA</th>
+                    <th>Organik</th>
+                </tr>
+            </thead>
+            <tbody id="tbKecamatanPertanian"></tbody>
+            <tfoot>
+                <tr style="background:#f2f2f2;font-weight:bold;">
+                    <td colspan="4">TOTAL</td>
+                    <td id="totPetani">0</td>
+                    <td id="totBuruh">0</td>
+                    <td id="totKelompok">0</td>
+                    <td id="totUrea">0</td>
+                    <td id="totNpk">0</td>
+                    <td id="totZa">0</td>
+                    <td id="totOrganik">0</td>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatanPertanian");
+
+    function render(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+
+        let no = 0;
+
+        let total = {
+            petani:0,
+            buruh:0,
+            kelompok:0,
+            urea:0,
+            npk:0,
+            za:0,
+            organik:0
+        };
+
+        desaList.forEach(desa=>{
+
+            if(!data.pertanian[desa]) return;
+
+            data.pertanian[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+
+                no++;
+
+                total.petani += r.petani || 0;
+                total.buruh += r.buruh_tani || 0;
+                total.kelompok += r.kelompok_tani || 0;
+                total.urea += r.urea || 0;
+                total.npk += r.npk || 0;
+                total.za += r.za || 0;
+                total.organik += r.organik || 0;
+
+                tb.innerHTML += `
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.petani||0}</td>
+                    <td>${r.buruh_tani||0}</td>
+                    <td>${r.kelompok_tani||0}</td>
+                    <td>${r.urea||0}</td>
+                    <td>${r.npk||0}</td>
+                    <td>${r.za||0}</td>
+                    <td>${r.organik||0}</td>
+                </tr>`;
+            });
+        });
+
+        if(no === 0){
+            tb.innerHTML = `<tr><td colspan="11">Tidak ada data</td></tr>`;
+        }
+
+        document.getElementById("totPetani").innerText = total.petani;
+        document.getElementById("totBuruh").innerText = total.buruh;
+        document.getElementById("totKelompok").innerText = total.kelompok;
+        document.getElementById("totUrea").innerText = total.urea;
+        document.getElementById("totNpk").innerText = total.npk;
+        document.getElementById("totZa").innerText = total.za;
+        document.getElementById("totOrganik").innerText = total.organik;
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    document.querySelector('.btnPDF').onclick = ()=>{
+        exportTablePDF(
+            'DATA PERTANIAN SELURUH DESA',
+            'tableKecamatanPertanian',
+            'Data_Pertanian_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+
+// ===== DATA PERKEBUNAN KECAMATAN =====
+function dataKecamatanPerkebunan(){
+
+    if(!data.perkebunan) data.perkebunan = {};
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+    <h3>DATA PERKEBUNAN & KEHUTANAN SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanPerkebunan">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Kelompok Perkebunan</th>
+                <th>Kelompok Kehutanan</th>
+                <th>Bantuan Perkebunan</th>
+                <th>Bantuan Kehutanan</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanPerkebunan"></tbody>
+        <tfoot>
+            <tr style="font-weight:bold;background:#dbe9ff;">
+                <td colspan="4">TOTAL</td>
+                <td id="totKelompokKebun">0</td>
+                <td id="totKelompokHutan">0</td>
+                <td id="totBantuanKebun">0</td>
+                <td id="totBantuanHutan">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    `;
+
+    const tb = document.getElementById("tbKecamatanPerkebunan");
+
+    function render(){
+
+        const filterB = document.querySelector('.filterBulan').value;
+        const filterT = document.querySelector('.filterTahun').value;
+
+        tb.innerHTML = "";
+
+        let no=0;
+        let total={
+            kelompok_perkebunan:0,
+            kelompok_kehutanan:0,
+            bantuan_perkebunan:0,
+            bantuan_kehutanan:0
+        };
+
+        desaList.forEach(desa=>{
+            if(!data.perkebunan[desa]) return;
+
+            data.perkebunan[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+
+                no++;
+
+                total.kelompok_perkebunan += r.kelompok_perkebunan||0;
+                total.kelompok_kehutanan += r.kelompok_kehutanan||0;
+                total.bantuan_perkebunan += r.bantuan_perkebunan||0;
+                total.bantuan_kehutanan += r.bantuan_kehutanan||0;
+
+                tb.innerHTML+=`
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.kelompok_perkebunan||0}</td>
+                    <td>${r.kelompok_kehutanan||0}</td>
+                    <td>${r.bantuan_perkebunan||0}</td>
+                    <td>${r.bantuan_kehutanan||0}</td>
+                </tr>`;
+            });
+        });
+
+        if(no===0){
+            tb.innerHTML=`<tr><td colspan="8">Tidak ada data</td></tr>`;
+        }
+
+        document.getElementById("totKelompokKebun").innerText = total.kelompok_perkebunan;
+        document.getElementById("totKelompokHutan").innerText = total.kelompok_kehutanan;
+        document.getElementById("totBantuanKebun").innerText = total.bantuan_perkebunan;
+        document.getElementById("totBantuanHutan").innerText = total.bantuan_kehutanan;
+    }
+
+    document.querySelector('.btnFilter').onclick = render;
+
+    document.querySelector('.btnPDF').onclick = ()=>{
+        exportTablePDF(
+            'DATA PERKEBUNAN & KEHUTANAN KECAMATAN',
+            'tableKecamatanPerkebunan',
+            'Perkebunan_Kecamatan.pdf'
+        );
+    };
+
+    render();
+}
+
+
+// ===== DATA UMKM KECAMATAN =====
+function dataKecamatanUMKM(){
+
+    if(!data.umkm) data.umkm = {};
+
+    const c=document.getElementById("main-content");
+    c.innerHTML=`<h3>DATA UMKM SELURUH DESA</h3>
+
+    <div class="filter-div">
+        <label>Bulan:</label>
+        <select class="filterBulan">
+            <option value="">-- Semua Bulan --</option>
+            ${bulanList.map(b=>`<option>${b}</option>`).join('')}
+        </select>
+
+        <label>Tahun:</label>
+        <select class="filterTahun">
+            <option value="">-- Semua Tahun --</option>
+            ${tahunList.map(t=>`<option>${t}</option>`).join('')}
+        </select>
+
+        <button class="btnFilter">Filter</button>
+        <button class="btnPDF">Export PDF</button>
+    </div>
+
+    <div class="table-wrapper">
+    <table id="tableKecamatanUMKM">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Desa</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Jumlah UMKM</th>
+                <th>NIB</th>
+                <th>PIRT</th>
+                <th>Sertifikat Halal</th>
+                <th>Penerima Bantuan UMKM</th>
+            </tr>
+        </thead>
+        <tbody id="tbKecamatanUMKM"></tbody>
+    </table>
+    </div>`;
+
+    const tb=document.getElementById("tbKecamatanUMKM");
+
+    function render(){
+
+        const filterB=document.querySelector('.filterBulan').value;
+        const filterT=document.querySelector('.filterTahun').value;
+
+        tb.innerHTML="";
+        let no=0;
+
+        // TOTAL
+        let total = {
+            jumlah_umkm:0, 
+            nib:0,
+            pirt:0,
+            sertifikat_halal:0,
+            bantuan_umkm:0
+        };
+
+        desaList.forEach(desa=>{
+            if(!data.umkm[desa]) return;
+
+            data.umkm[desa]
+            .filter(r=>(filterB===""||r.bulan===filterB)&&(filterT===""||r.tahun==filterT))
+            .forEach(r=>{
+                no++;
+                
+                total.jumlah_umkm += r.jumlah_umkm||0;
+                total.nib += r.nib||0;
+                total.pirt += r.pirt||0;
+                total.sertifikat_halal += r.sertifikat_halal||0;
+                total.bantuan_umkm += r.bantuan_umkm||0;
+
+                tb.innerHTML+=`
+                <tr>
+                    <td>${no}</td>
+                    <td>${desa}</td>
+                    <td>${r.bulan}</td>
+                    <td>${r.tahun}</td>
+                    <td>${r.jumlah_umkm||0}</td>
+                    <td>${r.nib||0}</td>
+                    <td>${r.pirt||0}</td>
+                    <td>${r.sertifikat_halal||0}</td>
+                    <td>${r.bantuan_umkm||0}</td>
+                </tr>`;
+            });
+        });
+
+        // BARIS TOTAL
+       // BARIS TOTAL
+tb.innerHTML+=`
+<tr style="font-weight:bold;background:#dbe9ff;">
+    <td colspan="4">TOTAL KECAMATAN</td>
+    <td>${total.jumlah_umkm}</td>
+    <td>${total.nib}</td>
+    <td>${total.pirt}</td>
+    <td>${total.sertifikat_halal}</td>
+    <td>${total.bantuan_umkm}</td>
+</tr>`;
+    }
+
+    document.querySelector('.btnFilter').onclick=render;
+
+    document.querySelector('.btnPDF').onclick=()=>{
+        exportTablePDF('DATA UMKM KECAMATAN','tableKecamatanUMKM','UMKM_Kecamatan.pdf');
+    };
+
+    render();
+}
+async function exportTablePDF(title, tableId, fileName){
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+        orientation:'landscape',
+        unit:'pt',
+        format:'a4'
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+
+    // ===== AMBIL FILTER YANG SEDANG AKTIF =====
+    const bulanSelect = document.querySelector("#main-content .filterBulan");
+    const tahunSelect = document.querySelector("#main-content .filterTahun");
+
+    let bulan = bulanSelect && bulanSelect.value ? bulanSelect.value : "Semua Bulan";
+    let tahun = tahunSelect && tahunSelect.value ? tahunSelect.value : "Semua Tahun";
+
+    // ===== JUDUL =====
+    doc.setFontSize(18);
+    doc.setFont('helvetica','bold');
+    doc.text(title, pageWidth/2, 40, {align:'center'});
+
+    // ===== BULAN & TAHUN (PASTI MUNCUL) =====
+    doc.setFontSize(12);
+    doc.setFont('helvetica','normal');
+    doc.text(`Bulan : ${bulan}`, 40, 65);
+    doc.text(`Tahun : ${tahun}`, 40, 80);
+
+    // ===== CLONE TABLE TANPA KOLOM AKSI =====
+    const table = document.getElementById(tableId);
+    const clone = table.cloneNode(true);
+
+    clone.querySelectorAll('tr').forEach(tr=>{
+        const last = tr.lastElementChild;
+        if(last && (last.textContent==='Aksi' || last.querySelector('button'))){
+            tr.removeChild(last);
+        }
+    });
+
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.style.position='absolute';
+    hiddenDiv.style.left='-9999px';
+    hiddenDiv.appendChild(clone);
+    document.body.appendChild(hiddenDiv);
+
+    const canvas = await html2canvas(clone, {scale:2});
+    document.body.removeChild(hiddenDiv);
+
+    const imgData = canvas.toDataURL('image/png');
+
+    const pdfWidth = pageWidth - 80;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    doc.addImage(imgData, 'PNG', 40, 100, pdfWidth, pdfHeight);
+
+    doc.save(fileName);
+}
+function tampilStatistikDesa(){
+
+    const c = document.getElementById("main-content");
+
+    c.innerHTML = `
+        <h3>STATISTIK DESA PALING AKTIF</h3>
+        <canvas id="chartDesa"></canvas>
+    `;
+
+    // Hitung jumlah kirim per desa
+    let desaCount = {};
+
+    data.notifikasi.forEach(n=>{
+        if(!desaCount[n.desa]){
+            desaCount[n.desa] = 0;
+        }
+        desaCount[n.desa]++;
+    });
+
+    // Urutkan terbesar ke terkecil
+    const sorted = Object.entries(desaCount)
+        .sort((a,b)=> b[1]-a[1]);
+
+    const labels = sorted.map(d=>d[0]);
+    const values = sorted.map(d=>d[1]);
+
+    new Chart(document.getElementById("chartDesa"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Jumlah Pengiriman Data',
+                data: values,
+                backgroundColor: [
+                    '#1a73e8','#4caf50','#ff9800',
+                    '#9c27b0','#f44336','#009688'
+                ]
+            }]
+        },
+        options:{
+            responsive:true,
+            plugins:{
+                legend:{display:false}
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    precision:0
+                }
+            }
+        }
+    });
+}
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } 
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDzB64owhHHUNg29nrNz5_oQzCftk4cNaM",
+  authDomain: "tandandesaku.firebaseapp.com",
+  databaseURL: "https://tandandesaku-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "tandandesaku",
+  storageBucket: "tandandesaku.firebasestorage.app",
+  messagingSenderId: "451443512126",
+  appId: "1:451443512126:web:d4c350ea6c0d8fefbc926f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+onValue(ref(db, "dataDesa"), (snapshot) => {
+
+  if(snapshot.exists()){
+    const firebaseData = snapshot.val();
+
+    // Gabungkan ke window.data tanpa merusak struktur
+    Object.assign(window.data, firebaseData);
+}
+
+    // 🔥 PENTING: pastikan semua struktur desa tetap ada
+    desaList.forEach(d=>{
+        if(!window.data.kependudukan[d]) window.data.kependudukan[d] = [];
+        if(!window.data.produkcapil[d]) window.data.produkcapil[d] = [];
+        if(!window.data.kesehatan[d]) window.data.kesehatan[d] = [];
+        if(!window.data.kondisi[d]) window.data.kondisi[d] = [];
+        if(!window.data.keagamaan[d]) window.data.keagamaan[d] = [];
+        if(!window.data.infrastruktur[d]) window.data.infrastruktur[d] = [];
+        if(!window.data.bantuan[d]) window.data.bantuan[d] = [];
+        if(!window.data.pendidikan[d]) window.data.pendidikan[d] = [];
+        if(!window.data.umkm[d]) window.data.umkm[d] = [];
+        if(!window.data.pertanian[d]) window.data.pertanian[d] = [];
+        if(!window.data.peternakan[d]) window.data.peternakan[d] = [];
+        if(!window.data.perkebunan[d]) window.data.perkebunan[d] = [];
+    });
+
+    if(!window.data.notifikasi) window.data.notifikasi = [];
+
+    updateBadge();
+});
+
+window.save = function(){
+    set(ref(db, "dataDesa"), window.data);
+};
+
+console.log("🔥 Firebase aktif");
+
+</script>
+  <script src="script.js"></script>
+</body>
+</html>
+
